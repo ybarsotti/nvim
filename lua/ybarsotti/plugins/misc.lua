@@ -22,7 +22,7 @@ return {
     'tpope/vim-sleuth',
   },
   { -- Highlight TODO, FIXME etc
-    'folke/todo-comments.nvim'
+    'folke/todo-comments.nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },

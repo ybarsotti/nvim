@@ -52,4 +52,3 @@ git clone https://github.com/dam9000/kickstart.nvim.git "${env:LOCALAPPDATA}\nvi
   - Join lines without space -> gj
 - Change word by regex -> Command mode `%s/<word>/<new_word>/<modifiers>` / Modifiers: g (global in file) - c (ask before changing it)
 - Copy (yank) to specific register -> `"<letter/number>y`
-  

@@ -27,4 +27,5 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
+  { 'mrjones2014/smart-splits.nvim', lazy = false },
 }

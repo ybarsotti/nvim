@@ -203,15 +203,17 @@ return {
             '.venv',
           },
           hide_by_pattern = { -- uses glob style patterns
-            --"*.meta",
-            --"*/src/*/tsconfig.json",
+            '*.meta',
+            '*/src/*/tsconfig.json',
+            '*lock.json',
           },
           always_show = { -- remains visible even if other settings would normally hide it
             --".gitignored",
           },
           never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-            --".DS_Store",
-            --"thumbs.db"
+            '.DS_Store',
+            'thumbs.db',
+            '*lock.json',
           },
           never_show_by_pattern = { -- uses glob style patterns
             --".null-ls_*",
@@ -309,7 +311,7 @@ return {
     }
 
     vim.cmd [[nnoremap \ :Neotree reveal<cr>]]
-    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>', { noremap = true, silent = true }) -- focus file explorer
+    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=right<CR>', { noremap = true, silent = true }) -- focus file explorer
     vim.keymap.set('n', '<leader>ngs', ':Neotree float git_status<CR>', { noremap = true, silent = true }) -- open git status window
   end,
 }

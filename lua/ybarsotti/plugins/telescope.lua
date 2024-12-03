@@ -52,7 +52,7 @@ return {
         },
       },
       live_grep = {
-        file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+        file_ignore_patterns = { 'node_modules', '.git', '.venv', 'package-lock.json', 'lazy-lock.json' },
         additional_args = function(_)
           return { '--hidden' }
         end,

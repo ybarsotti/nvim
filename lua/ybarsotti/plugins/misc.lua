@@ -40,7 +40,13 @@ return {
     end,
   },
   { -- Helps updating tags "(), ''"
+    -- Keybind: cs<current_tag><new_tag>
     'tpope/vim-surround',
     lazy = false,
+  },
+  { -- Better looking input commands
+    'stevearc/dressing.nvim',
+    -- event = 'VeryLazy',
+    opts = {},
   }
 }

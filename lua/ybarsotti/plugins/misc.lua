@@ -28,7 +28,7 @@ return {
     opts = { signs = false },
   },
   { 'mrjones2014/smart-splits.nvim', lazy = false },
-  {
+  { -- Complete tags <div></div> for example
     'windwp/nvim-ts-autotag',
     lazy = false,
     dependencies = {
@@ -39,4 +39,8 @@ return {
       require('nvim-ts-autotag').setup()
     end,
   },
+  { -- Helps updating tags "(), ''"
+    'tpope/vim-surround',
+    lazy = false,
+  }
 }

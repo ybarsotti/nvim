@@ -48,5 +48,8 @@ return {
     'stevearc/dressing.nvim',
     -- event = 'VeryLazy',
     opts = {},
+  },
+  { -- Allows to repeat non native commands
+    'tpope/vim-repeat'
   }
 }

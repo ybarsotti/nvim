@@ -28,4 +28,15 @@ return {
     opts = { signs = false },
   },
   { 'mrjones2014/smart-splits.nvim', lazy = false },
+  {
+    'windwp/nvim-ts-autotag',
+    lazy = false,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'windwp/nvim-ts-autotag',
+    },
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end,
+  },
 }

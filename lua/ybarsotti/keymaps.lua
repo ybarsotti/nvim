@@ -17,71 +17,62 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
--- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
--- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
--- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
--- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
 -- Save and format
-vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
+vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', vim.tbl_extend('force', opts, { desc = 'Save' }))
 
 -- Quit file
-vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
+vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', vim.tbl_extend('force', opts, { desc = 'Quit file' }))
 
 -- Delete char without saving it into register
-vim.keymap.set('n', 'x', '"_x', opts)
+vim.keymap.set({'n', 'v'}, 'x', '"_x', vim.tbl_extend('force', opts, { desc = 'Delete char without saving it into register' }))
 
 -- Vertical scroll and center
-vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
-vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
+vim.keymap.set('n', '<C-d>', '<C-d>zz', vim.tbl_extend('force', opts, { desc = 'Scroll down and center screen' }))
+vim.keymap.set('n', '<C-u>', '<C-u>zz', vim.tbl_extend('force', opts, { desc = 'Scroll up and center screen' }))
 
 -- Find and center
-vim.keymap.set('n', 'n', 'nzzzv', opts)
-vim.keymap.set('n', 'N', 'Nzzzv', opts)
+vim.keymap.set('n', 'n', 'nzzzv', vim.tbl_extend('force', opts, { desc = 'Find next and center' }))
+vim.keymap.set('n', 'N', 'Nzzzv', vim.tbl_extend('force', opts, { desc = 'Find previous and center' }))
 
 -- Resize with arrows
-vim.keymap.set('n', '<Up>', ':resize -2<CR>', opts)
-vim.keymap.set('n', '<Down>', ':resize +2<CR>', opts)
-vim.keymap.set('n', '<Left>', ':vertical resize -2<CR>', opts)
-vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
+vim.keymap.set('n', '<Up>', ':resize -2<CR>', vim.tbl_extend('force', opts, { desc = 'Resize top' }))
+vim.keymap.set('n', '<Down>', ':resize +2<CR>', vim.tbl_extend('force', opts, { desc = 'Resize down' }))
+vim.keymap.set('n', '<Left>', ':vertical resize -2<CR>', vim.tbl_extend('force', opts, { desc = 'Resize left' }))
+vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', vim.tbl_extend('force', opts, { desc = 'Resize right' }))
 
 -- Buffers
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', vim.tbl_extend('force', opts, { desc = 'Goto next buffer' }))
-vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
-vim.keymap.set('n', '<leader>x', ':bdelete!<CR>', opts) -- close buffer
-vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
+vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', vim.tbl_extend('force', opts, { desc = 'Close previous buffer'}))
+vim.keymap.set('n', '<leader>x', ':bdelete!<CR>', vim.tbl_extend('force', opts, { desc = 'Close buffer'})) -- close buffer
+vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', vim.tbl_extend('force', opts, { desc = 'New buffer'})) -- new buffer
 
 -- Window management
-vim.keymap.set('n', '<leader>v', '<C-w>v', opts) -- split window vertically
-vim.keymap.set('n', '<leader>h', '<C-w>s', opts) -- split window horizontally
-vim.keymap.set('n', '<leader>se', '<C-w>=', opts) -- make split windows equal width & height
-vim.keymap.set('n', '<leader>xs', ':close<CR>', opts) -- close current split window
+vim.keymap.set('n', '<leader>v', '<C-w>v', vim.tbl_extend('force', opts, { desc = 'Split vertically'})) -- split window vertically
+vim.keymap.set('n', '<leader>h', '<C-w>s', vim.tbl_extend('force', opts, { desc = 'Split horizontally'})) -- split window horizontally
+vim.keymap.set('n', '<leader>se', '<C-w>=', vim.tbl_extend('force', opts, { desc = 'Make split windows equal'})) -- make split windows equal width & height
+vim.keymap.set('n', '<leader>xs', ':close<CR>', vim.tbl_extend('force', opts, { desc = 'Close current split window'})) -- close current split window
 
 -- Navigate between splits
-vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', opts)
-vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', opts)
-vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', opts)
-vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', opts)
+vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', vim.tbl_extend('force', opts, { desc = 'Move to window above'}))
+vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', vim.tbl_extend('force', opts, { desc = 'Move to window below'}))
+vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', vim.tbl_extend('force', opts, { desc = 'Move to left window'}))
+vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', vim.tbl_extend('force', opts, { desc = 'Move to right window'}))
 
 -- Tabs
-vim.keymap.set('n', '<leader>to', ':tabnew<CR>', opts) -- open new tab
-vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', opts) -- close current tab
-vim.keymap.set('n', '<leader>tn', ':tabn<CR>', opts) --  go to next tab
-vim.keymap.set('n', '<leader>tp', ':tabp<CR>', opts) --  go to previous tab
+vim.keymap.set('n', '<leader>to', ':tabnew<CR>', vim.tbl_extend('force', opts, { desc = 'Open new tab'})) -- open new tab
+vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', vim.tbl_extend('force', opts, { desc = 'Close tab'})) -- close current tab
+vim.keymap.set('n', '<leader>tn', ':tabn<CR>', vim.tbl_extend('force', opts, { desc = 'Go to next tab'})) --  go to next tab
+vim.keymap.set('n', '<leader>tp', ':tabp<CR>', vim.tbl_extend('force', opts, { desc = 'Go to previous tab'})) --  go to previous tab
 
 -- Toggle line wrapping
-vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', opts)
+vim.keymap.set('n', '<leader>lw', '<cmd>set wrap!<CR>', vim.tbl_extend('force', opts, { desc = 'Toggle line wrap'}))
 
 -- Stay in indent mode
-vim.keymap.set('v', '<', '<gv', opts)
-vim.keymap.set('v', '>', '>gv', opts)
+vim.keymap.set('v', '<', '<gv', vim.tbl_extend('force', opts, { desc = 'Indent to left'}))
+vim.keymap.set('v', '>', '>gv', vim.tbl_extend('force', opts, { desc = 'Indent to right'}))
 
 -- Keep last yanked when pasting
-vim.keymap.set('v', 'p', '"_dP', opts)
+vim.keymap.set('v', 'p', '"_dP', vim.tbl_extend('force', opts, { desc = 'Paste and keep last yanked'}))
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })

@@ -92,12 +92,38 @@ return {
       },
     },
   },
-  {
+  { -- Debugger
     'mfussenegger/nvim-dap',
     optional = true,
     -- stylua: ignore
     keys = {
-      { "<leader>td", function() require("neotest").run.run({strategy = "dap"}) end, desc = "Debug Nearest" },
+      { 
+        "<leader>td",
+        function() 
+          require("neotest").run.run({strategy = "dap"})
+        end,
+        desc = "Debug Nearest"
+      },
+      {
+        "<leader>dO",
+        function()
+          require("dap").step_out()
+        end,
+        desc = "Step Out",
+      },
+      {
+        "<leader>do",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "Step Over",
+      },
+    },
+  },
+  { -- Debugger extension
+    'theHamsta/nvim-dap-virtual-text',
+    opts = {
+      virt_text_win_col = 80,
     },
   },
 }

@@ -6,9 +6,9 @@ return {
 
   config = function()
     local alpha = require 'alpha'
-    local dashboard = require 'alpha.themes.startify'
+    local dashboard = require 'alpha.themes.theta'
 
-    dashboard.section.header.val = {
+    dashboard.header.val = {
       [[____________________  _______________________________]],
       [[\______   \______   \/   _____/\__    ___/\__    ___/]],
       [[ |    |  _/|       _/\_____  \   |    |     |    |   ]],
@@ -16,7 +16,7 @@ return {
       [[ |______  /|____|_  /_______  /  |____|     |____|   ]],
       [[        \/        \/        \/                       ]],
     }
-
-    alpha.setup(dashboard.opts)
+    dashboard.file_icons.provider = "devicons"
+    alpha.setup(dashboard.config)
   end,
 }

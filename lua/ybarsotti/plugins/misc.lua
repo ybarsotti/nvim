@@ -47,7 +47,7 @@ return {
   { -- Allows to repeat non native commands
     'tpope/vim-repeat',
   },
-  {
+  { -- Code screenshots
     'mistricky/codesnap.nvim',
     build = 'make build_generator',
     keys = {

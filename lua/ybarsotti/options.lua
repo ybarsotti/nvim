@@ -68,6 +68,6 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
 -- Enable blinking cursor
-vim.opt.guicursor = 'n-v-sm:block,c-ci-ve:ver20,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor'
+vim.opt.guicursor = 'n-v-sm:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,c-ci-ve:ver20,r-cr-o:hor20,i:ver25-blinkon500-blinkoff500'
 
 -- vim: ts=2 sts=2 sw=2 et

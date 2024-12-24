@@ -19,7 +19,7 @@ return {
         right_trunc_marker = '',
         max_name_length = 30,
         max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
-        tab_size = 21,
+        tab_size = 26,
         diagnostics = 'nvim_lsp',
         diagnostics_update_in_insert = false,
         color_icons = true,

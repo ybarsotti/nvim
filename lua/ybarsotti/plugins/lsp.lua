@@ -141,29 +141,14 @@ return {
           },
         },
       },
-      ruff = {}, -- Python linter and formatter
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              mccabe = { enabled = false },
-              pylsp_mypy = { enabled = false },
-              pylsp_black = { enabled = false },
-              pylsp_isort = { enabled = false },
-            },
-          },
-        },
+      pyright = {
+        filetypes = {'python'}
       },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
       dockerls = {},
       jsonls = {},
       yamlls = {},
-
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -207,6 +192,8 @@ return {
       'eslint_d',
       'pylint',
       'cpplint',
+      'ruff',
+      'mypy',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

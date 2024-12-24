@@ -129,7 +129,18 @@ return {
       -- But for many setups, the LSP (`tsserver`) will work just fine
       ts_ls = {}, -- tsserver is deprecated
       clangd = {},
-      gopls = {},
+      gopls = {
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true
+            }
+          },
+        },
+      },
       ruff = {}, -- Python linter and formatter
       pylsp = {
         settings = {
@@ -172,7 +183,7 @@ return {
             },
             diagnostics = { disable = { 'missing-fields' } },
             format = {
-              enable = false,
+              enable = true,
             },
           },
         },

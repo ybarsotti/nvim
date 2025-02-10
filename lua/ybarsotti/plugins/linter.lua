@@ -11,6 +11,11 @@ return {
       typescriptreact = { 'eslint_d' },
       python = { 'pylint' },
       cpp = { 'cpplint' },
+      dockerfile = { 'hadolint' },
+      go = { 'golangcilint' },
+      lua = { 'selene' },
+      markdown = { 'markdownlint-cli2' },
+      yaml = { 'yamllint' },
     }
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

@@ -6,9 +6,22 @@ return {
 
   config = function()
     local alpha = require 'alpha'
-    local dashboard = require 'alpha.themes.theta'
+    local dashboard = require 'alpha.themes.dashboard'
+    local theta = require 'alpha.themes.theta'
 
-    dashboard.header.val = {
+    local buttons = {
+      { type = 'text', val = 'Quick links', opts = { hl = 'SpecialComment', position = 'center' } },
+      { type = 'padding', val = 1 },
+      dashboard.button('r', '  > Recent used files', ':Telescope oldfiles <CR>'),
+      dashboard.button('f', '󰈞  > Find file', ':Telescope find_files <CR>'),
+      dashboard.button('g', '󰊄  > Live grep', ':Telescope live_grep <CR>'),
+      dashboard.button('b', '  > Bookmarks', ':Telescope marks <CR>'),
+      dashboard.button('u', '  > Update plugins', '<cmd>Lazy sync <CR>'),
+      dashboard.button('q', '󰈆  > Quit NVIM', ':qa<CR>'),
+    }
+
+    theta.buttons.val = buttons
+    theta.header.val = {
       [[____________________  _______________________________]],
       [[\______   \______   \/   _____/\__    ___/\__    ___/]],
       [[ |    |  _/|       _/\_____  \   |    |     |    |   ]],
@@ -16,7 +29,7 @@ return {
       [[ |______  /|____|_  /_______  /  |____|     |____|   ]],
       [[        \/        \/        \/                       ]],
     }
-    dashboard.file_icons.provider = "devicons"
-    alpha.setup(dashboard.config)
+    theta.file_icons.provider = 'devicons'
+    alpha.setup(theta.config)
   end,
 }

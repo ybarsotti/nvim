@@ -12,12 +12,13 @@ return {
     local buttons = {
       { type = 'text', val = 'Quick links', opts = { hl = 'SpecialComment', position = 'center' } },
       { type = 'padding', val = 1 },
+      dashboard.button('s', '󱣴  > Open session', ':SessionSearch <CR>'),
       dashboard.button('r', '  > Recent used files', ':Telescope oldfiles <CR>'),
       dashboard.button('f', '󰈞  > Find file', ':Telescope find_files <CR>'),
       dashboard.button('g', '󰊄  > Live grep', ':Telescope live_grep <CR>'),
       dashboard.button('b', '  > Bookmarks', ':Telescope marks <CR>'),
       dashboard.button('u', '  > Update plugins', '<cmd>Lazy sync <CR>'),
-      dashboard.button('q', '󰈆  > Quit NVIM', ':qa<CR>'),
+      dashboard.button('q', '󰈆  > Quit NVIM', ':qa<CR>'), 
     }
 
     theta.buttons.val = buttons

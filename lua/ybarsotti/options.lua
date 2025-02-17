@@ -67,6 +67,9 @@ vim.opt.softtabstop = 4
 -- Change tab to space
 vim.opt.expandtab = true
 
+-- Added to improve exp with rmagatti/auto-session
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 -- Enable blinking cursor
 vim.opt.guicursor = 'n-v-sm:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,c-ci-ve:ver20,r-cr-o:hor20,i:ver25-blinkon500-blinkoff500'
 

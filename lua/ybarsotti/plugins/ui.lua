@@ -286,7 +286,7 @@ return {
     lazy = true,
     keys = {
       {
-        '<leader>lf',
+        '<leader>ly',
         '<cmd>Yazi<cr>',
         desc = 'Open Yazi (file manager)',
       },

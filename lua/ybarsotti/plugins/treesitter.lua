@@ -51,7 +51,7 @@ return {
       },
     },
     keys = {
-      { '<leader>to', '<cmd>Outline<cr>', desc = 'Toggle Outline' },
+      { '<leader>tz', '<cmd>Outline<cr>', desc = 'Toggle Outline' },
     },
   },
 }

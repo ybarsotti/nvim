@@ -8,7 +8,6 @@ return {
         transparent = false,
         italic_comments = false,
         hide_fillchars = true,
-        borderless_telescope = true,
         terminal_colors = true
       }
       vim.cmd 'colorscheme cyberdream'

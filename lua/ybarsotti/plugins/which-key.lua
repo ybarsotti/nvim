@@ -45,6 +45,7 @@ return {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
+        { "<leader>R", group = "[R]eplace" },
       },
     },
   },

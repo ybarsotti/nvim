@@ -61,4 +61,7 @@ return {
       watermark = '',
     },
   },
+  { -- Improve this f vim motionssss, just run :VimBeGood in an empty file
+    'ThePrimeagen/vim-be-good',
+  },
 }

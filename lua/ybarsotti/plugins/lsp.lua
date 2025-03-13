@@ -18,11 +18,6 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
-        -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-        -- to define small helper and utility functions so you don't have to repeat yourself.
-        --
-        -- In this case, we create a function that lets us more easily define mappings specific
-        -- for LSP related items. It sets the mode, buffer and description for us each time.
         local map = function(keys, func, desc, mode)
           mode = mode or 'n'
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -127,7 +122,16 @@ return {
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      ts_ls = {}, -- tsserver is deprecated
+      ts_ls = {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          client.server_capabilities.completionProvider = {
+            triggerCharacters = { '.', '"', "'", '`', '/', '@', '<' },
+          }
+
+          vim.keymap.set('i', '<C-S>', vim.lsp.buf.completion, { buffer = bufnr })
+        end,
+      }, -- tsserver is deprecated
       clangd = {},
       gopls = {
         settings = {
@@ -215,10 +219,13 @@ return {
           format = {
             enable = false, -- let conform handle the formatting
           },
-          diagnostics = { globals = { 'vim' } },
           telemetry = { enable = false },
           hint = { enable = true },
           Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = { globals = { 'vim' } },
             workspace = {
               checkThirdParty = false,
             },

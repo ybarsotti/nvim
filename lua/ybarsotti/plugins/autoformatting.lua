@@ -20,6 +20,7 @@ return {
         graphql = { 'prettier' },
         lua = { 'stylua' },
         python = { 'isort', 'black', 'autopep8' },
+        shell = {'shfmt'}
       },
     }
 

@@ -19,6 +19,9 @@ require 'ybarsotti.lazy-bootstrap'
 -- [[ Configure and install plugins ]]
 require 'ybarsotti.lazy-plugins'
 
+-- [[ Autommands ]]
+require 'ybarsotti.autocommands'
+
 -- Prepend mise shims to PATH
 vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
 

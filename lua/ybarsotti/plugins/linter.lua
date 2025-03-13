@@ -13,7 +13,7 @@ return {
       cpp = { 'cpplint' },
       dockerfile = { 'hadolint' },
       go = { 'golangcilint' },
-      lua = { 'selene' },
+      lua = { 'luacheck' },
       markdown = { 'markdownlint-cli2' },
       yaml = { 'yamllint' },
     }

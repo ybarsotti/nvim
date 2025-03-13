@@ -18,15 +18,15 @@ return {
     config = function()
       require('neotest').setup {
         adapters = {
-          require 'neotest-jest',
           require 'neotest-python',
+          require 'neotest-jest',
           require 'neotest-golang',
           require 'neotest-vitest',
         },
       }
     end,
     keys = {
-      { '<leader>t', '', desc = '+test' },
+      { '<leader>t', '', desc = 'NeoTest' },
       {
         '<leader>tt',
         function()
@@ -101,16 +101,29 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
       "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap-python"
+      "mfussenegger/nvim-dap-python",
+      "mfussenegger/nvim-dap-vscode-js",
     },
     config = function()
       local dap = require 'dap'
       local ui = require 'dapui'
 
       require('dapui').setup()
-      require('dap-go').setup()
+      require('dap-go').setup {
+        dap_configurations = {
+          {
+            type = 'go',
+            name = 'Attach remote',
+            mode = 'remote',
+            request = 'attach',
+          },
+        },
+        delve = {
+          port = '40000',
+        },
+      }
       require('nvim-dap-virtual-text').setup {}
-      require('dap-python').setup('python3')
+      require('dap-python').setup 'python3'
 
       -- Eval var under cursor
       vim.keymap.set('n', '<space>?', function()

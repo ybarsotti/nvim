@@ -64,6 +64,9 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 
+-- Remove text wrap
+vim.opt.wrap = false
+
 -- Change tab to space
 vim.opt.expandtab = true
 

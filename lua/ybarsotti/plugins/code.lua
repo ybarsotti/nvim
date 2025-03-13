@@ -16,9 +16,8 @@ return {
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
-    lazy = false,
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
-    setup = function()
+    config = function()
       local harpoon = require 'harpoon'
       local harpoon_extensions = require 'harpoon.extensions'
       local conf = require('telescope.config').values
@@ -43,9 +42,9 @@ return {
           :find()
       end
 
-      vim.keymap.set('n', '<leader>a', function()
+      vim.keymap.set('n', '<leader>ca', function()
         harpoon:list():add()
-      end)
+      end, { desc = "Add file to the list [Harpoon]"})
       vim.keymap.set('n', '<C-h>', function()
         harpoon:list():select(1)
       end)
@@ -55,9 +54,9 @@ return {
       vim.keymap.set('n', '<C-n>', function()
         harpoon:list():select(3)
       end)
-      vim.keymap.set('n', '<C-s>', function()
-        harpoon:list():select(4)
-      end)
+      -- vim.keymap.set('n', '<C-s>', function()
+      --   harpoon:list():select(4)
+      -- end)
 
       -- Toggle previous & next buffers stored within Harpoon list
       vim.keymap.set('n', '<C-S-P>', function()
@@ -66,7 +65,7 @@ return {
       vim.keymap.set('n', '<C-S-N>', function()
         harpoon:list():next()
       end)
-      vim.keymap.set('n', '<C-e>', function()
+      vim.keymap.set('n', '<leader><C-e>', function()
         toggle_telescope(harpoon:list())
       end, { desc = 'Open harpoon window' })
     end,

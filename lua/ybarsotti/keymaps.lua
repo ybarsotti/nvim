@@ -44,8 +44,8 @@ vim.keymap.set('n', '<leader>xb', ':bdelete!<CR>', vim.tbl_extend('force', opts,
 vim.keymap.set('n', '<leader>nb', '<cmd> enew <CR>', vim.tbl_extend('force', opts, { desc = 'New buffer'})) -- new buffer
 
 -- Window management
-vim.keymap.set('n', '<leader>v', '<C-w>v', vim.tbl_extend('force', opts, { desc = 'Split vertically'})) -- split window vertically
-vim.keymap.set('n', '<leader>h', '<C-w>s', vim.tbl_extend('force', opts, { desc = 'Split horizontally'})) -- split window horizontally
+vim.keymap.set('n', '<leader>wv', '<C-w>v', vim.tbl_extend('force', opts, { desc = 'Split vertically'})) -- split window vertically
+vim.keymap.set('n', '<leader>wh', '<C-w>s', vim.tbl_extend('force', opts, { desc = 'Split horizontally'})) -- split window horizontally
 vim.keymap.set('n', '<leader>se', '<C-w>=', vim.tbl_extend('force', opts, { desc = 'Make split windows equal'})) -- make split windows equal width & height
 vim.keymap.set('n', '<leader>xs', ':close<CR>', vim.tbl_extend('force', opts, { desc = 'Close current split window'})) -- close current split window
 

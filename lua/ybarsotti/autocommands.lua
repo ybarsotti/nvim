@@ -1,8 +1,18 @@
-vim.api.nvim_create_autocmd('TextYankPost', {
+local augroup = vim.api.nvim_create_augroup
+
+-- local SottiGroup = augroup('Sotti', { clear = true })
+local yank_group = augroup('HighlightYank', {})
+
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  group = yank_group,
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank {
+      higroup = 'IncSearch',
+      timeout = 40,
+    }
   end,
 })
 

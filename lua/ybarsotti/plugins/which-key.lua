@@ -47,6 +47,7 @@ return {
         { '<leader>t', group = '[T]est', mode = { 'n' } },
         { '<leader>q', group = '[Q]ode Diagnostics', mode = { 'n' } },
         { '<leader>R', group = '[R]eplace' },
+        { '<leader>z', group = '[Z]en Mode' },
       },
     },
   },

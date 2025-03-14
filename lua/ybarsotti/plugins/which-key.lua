@@ -45,6 +45,7 @@ return {
         { '<leader>s', group = '[S]earch' },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]est', mode = { 'n' } },
+        { '<leader>q', group = '[Q]ode Diagnostics', mode = { 'n' } },
         { '<leader>R', group = '[R]eplace' },
       },
     },

@@ -281,18 +281,4 @@ return {
       }
     end,
   },
-  {
-    'mikavilpas/yazi.nvim',
-    lazy = true,
-    keys = {
-      {
-        '<leader>ly',
-        '<cmd>Yazi<cr>',
-        desc = 'Open Yazi (file manager)',
-      },
-    },
-    opts = {
-      open_for_directories = true,
-    },
-  },
 }

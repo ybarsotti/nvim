@@ -64,4 +64,18 @@ return {
   { -- Improve this f vim motionssss, just run :VimBeGood in an empty file
     'ThePrimeagen/vim-be-good',
   },
+  { -- File Manager
+    'mikavilpas/yazi.nvim',
+    lazy = true,
+    keys = {
+      {
+        '<leader>y',
+        '<cmd>Yazi<cr>',
+        desc = 'Yazi: Open',
+      },
+    },
+    opts = {
+      open_for_directories = true,
+    },
+  },
 }

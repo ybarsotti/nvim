@@ -56,7 +56,7 @@ return {
       vim.keymap.set('n', '<leader>4', function()
         harpoon:list():select(4)
       end, { desc = 'Harpoon: Go to file 4' })
-      vim.keymap.set('n', '<leader>he', function()
+      vim.keymap.set('n', '<leader>ce', function()
         toggle_telescope(harpoon:list())
       end, { desc = 'Harpoon: Open window' })
     end,

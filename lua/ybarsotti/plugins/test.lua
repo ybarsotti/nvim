@@ -125,7 +125,7 @@ return {
       require('dap-python').setup 'python3'
 
       -- Eval var under cursor
-      vim.keymap.set('n', '<space>?', function()
+      vim.keymap.set('n', '<space>t?', function()
         require('dapui').eval(nil, { enter = true })
       end, { desc = "DAP: Eval under cursor" })
 

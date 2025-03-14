@@ -2,6 +2,9 @@ return {
   {
     'sindrets/diffview.nvim',
     lazy = true,
+    keys = {
+      { '<leader>gd', '<cmd>:DiffviewOpen<cr>', desc = 'DiffView: [G]it [D]iff Open' },
+    },
   },
   {
     'kdheepak/lazygit.nvim',
@@ -72,12 +75,12 @@ return {
         map('n', '<leader>gR', gitsigns.reset_buffer, { desc = '[g]it [R]eset buffer' })
         map('n', '<leader>gp', gitsigns.preview_hunk, { desc = '[g]it [p]review hunk' })
         -- map('n', '<leader>gb', gitsigns.blame_line, { desc = '[g]it [b]lame line' })
-        map('n', '<leader>gd', gitsigns.diffthis, { desc = '[g]it [d]iff against index' })
-        map('n', '<leader>gD', function()
-          gitsigns.diffthis '@'
-        end, { desc = '[g]it [D]iff against last commit' })
+        -- map('n', '<leader>gd', gitsigns.diffthis, { desc = '[g]it [d]iff against index' })
+        -- map('n', '<leader>gD', function()
+        --   gitsigns.diffthis '@'
+        -- end, { desc = '[g]it [D]iff against last commit' })
         -- Toggles
-        map('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = 'Toggle [g]it show [b]lame line' })
+        -- map('n', '<leader>gb', gitsigns.toggle_current_line_blame, { desc = 'Toggle [g]it show [b]lame line' })
         -- map('n', '<leader>gD', gitsigns.toggle_deleted, { desc = 'Toggle [g]it show [D]eleted' })
       end,
     },

@@ -26,69 +26,68 @@ return {
       }
     end,
     keys = {
-      { '<leader>t', '', desc = 'NeoTest' },
       {
         '<leader>tt',
         function()
           require('neotest').run.run(vim.fn.expand '%')
         end,
-        desc = 'Run File (Neotest)',
+        desc = 'Neotest: Run File',
       },
       {
         '<leader>tT',
         function()
           require('neotest').run.run(vim.uv.cwd())
         end,
-        desc = 'Run All Test Files (Neotest)',
+        desc = 'Neotest: Run All Test Files',
       },
       {
         '<leader>tr',
         function()
           require('neotest').run.run()
         end,
-        desc = 'Run Nearest (Neotest)',
+        desc = 'Neotest: Run Nearest',
       },
       {
         '<leader>tl',
         function()
           require('neotest').run.run_last()
         end,
-        desc = 'Run Last (Neotest)',
+        desc = 'Neotest: Run Last',
       },
       {
         '<leader>ts',
         function()
           require('neotest').summary.toggle()
         end,
-        desc = 'Toggle Summary (Neotest)',
+        desc = 'Neotest: Toggle Summary',
       },
       {
         '<leader>to',
         function()
           require('neotest').output.open { enter = true, auto_close = true }
         end,
-        desc = 'Show Output (Neotest)',
+        desc = 'Neotest: Show Output',
       },
       {
         '<leader>tO',
         function()
           require('neotest').output_panel.toggle()
         end,
-        desc = 'Toggle Output Panel (Neotest)',
+        desc = 'Neotest: Toggle Output Panel',
       },
       {
         '<leader>tS',
         function()
           require('neotest').run.stop()
         end,
-        desc = 'Stop (Neotest)',
+        desc = 'Neotest: Stop',
       },
       {
         '<leader>tw',
         function()
           require('neotest').watch.toggle(vim.fn.expand '%')
         end,
-        desc = 'Toggle Watch (Neotest)',
+        desc = 'Neotest: Toggle Watch',
       },
     },
   },
@@ -130,8 +129,8 @@ return {
         require('dapui').eval(nil, { enter = true })
       end)
 
-      vim.keymap.set('n', '<space>b', dap.toggle_breakpoint)
-      vim.keymap.set('n', '<space>gb', dap.run_to_cursor)
+      vim.keymap.set('n', '<space>tb', dap.toggle_breakpoint)
+      vim.keymap.set('n', '<space>tc', dap.run_to_cursor)
 
       vim.keymap.set('n', '<F1>', dap.continue)
       vim.keymap.set('n', '<F2>', dap.step_into)

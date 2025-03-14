@@ -7,10 +7,10 @@ return {
   ---@type AutoSession.Config
   keys = {
     -- Will use Telescope if installed or a vim.ui.select picker otherwise
-    { '<leader>wr', '<cmd>SessionSearch<CR>', desc = 'Session search (autosession)' },
-    { '<leader>wS', '<cmd>SessionSave<CR>', desc = 'Save session (autosession)' },
-    { '<leader>wa', '<cmd>SessionToggleAutoSave<CR>', desc = 'Toggle autosave (autosession)' },
-    { '<leader>wd', '<cmd>SessionPurgeOrphaned<CR>', desc = 'Purge orphaned sessions (autosession)' },
+    { '<leader>wr', '<cmd>SessionSearch<CR>', desc = 'Autosession: Session search' },
+    { '<leader>wS', '<cmd>SessionSave<CR>', desc = 'Autosession: Save session' },
+    { '<leader>wa', '<cmd>SessionToggleAutoSave<CR>', desc = 'Autosession: Toggle autosave' },
+    { '<leader>wd', '<cmd>SessionPurgeOrphaned<CR>', desc = 'Autosession: Purge orphaned sessions' },
   },
   opts = {
     bypass_save_filetypes = { 'alpha', 'dashboard' },

@@ -4,6 +4,7 @@ return {
     lazy = true,
     keys = {
       { '<leader>gd', '<cmd>:DiffviewOpen<cr>', desc = 'DiffView: [G]it [D]iff Open' },
+      { '<leader>gx', '<cmd>:DiffviewClose<cr>', desc = 'DiffView: [G]it Diff [C]lose' },
     },
   },
   {

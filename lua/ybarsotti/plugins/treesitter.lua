@@ -51,7 +51,7 @@ return {
       },
     },
     keys = {
-      { '<leader>tz', '<cmd>Outline<cr>', desc = 'Toggle Outline' },
+      { '<leader>cz', '<cmd>Outline<cr>', desc = 'Outline: Toggle code elements' },
     },
   },
 }

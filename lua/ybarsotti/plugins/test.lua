@@ -127,17 +127,17 @@ return {
       -- Eval var under cursor
       vim.keymap.set('n', '<space>?', function()
         require('dapui').eval(nil, { enter = true })
-      end)
+      end, { desc = "DAP: Eval under cursor" })
 
-      vim.keymap.set('n', '<space>tb', dap.toggle_breakpoint)
-      vim.keymap.set('n', '<space>tc', dap.run_to_cursor)
+      vim.keymap.set('n', '<space>tb', dap.toggle_breakpoint, { desc = "DAP: [T]oggle [B]reakpoint" })
+      vim.keymap.set('n', '<space>tc', dap.run_to_cursor, { desc = "DAP: Run [C]ursor" })
 
-      vim.keymap.set('n', '<F1>', dap.continue)
-      vim.keymap.set('n', '<F2>', dap.step_into)
-      vim.keymap.set('n', '<F3>', dap.step_over)
-      vim.keymap.set('n', '<F4>', dap.step_out)
-      vim.keymap.set('n', '<F5>', dap.step_back)
-      vim.keymap.set('n', '<F13>', dap.restart)
+      vim.keymap.set('n', '<F1>', dap.continue, { desc = "DAP: Continue" })
+      vim.keymap.set('n', '<F2>', dap.step_into, { desc = "DAP: Step Into" })
+      vim.keymap.set('n', '<F3>', dap.step_over, { desc = "DAP: Step Over" })
+      vim.keymap.set('n', '<F4>', dap.step_out, { desc = "DAP: Step Out" })
+      vim.keymap.set('n', '<F5>', dap.step_back, { desc = "DAP: Step Back" })
+      vim.keymap.set('n', '<F13>', dap.restart, { desc = "DAP: Restart" })
 
       dap.listeners.before.attach.dapui_config = function()
         ui.open()

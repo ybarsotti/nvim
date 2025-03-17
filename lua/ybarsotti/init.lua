@@ -7,6 +7,10 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- For the markdown plugin
+vim.g.mkdp_filetypes = { 'markdown' }
+vim.g.mkdp_auto_start = 1
+
 -- [[ Setting options ]]
 require 'ybarsotti.options'
 
@@ -23,7 +27,7 @@ require 'ybarsotti.lazy-plugins'
 require 'ybarsotti.autocommands'
 
 -- Prepend mise shims to PATH
-vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+vim.env.PATH = vim.env.HOME .. '/.local/share/mise/shims:' .. vim.env.PATH
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

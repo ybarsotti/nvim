@@ -34,7 +34,7 @@ vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', vim.tbl_extend('force'
 -- Buffers
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', vim.tbl_extend('force', opts, { desc = 'Goto next buffer' }))
 vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', vim.tbl_extend('force', opts, { desc = 'Close previous buffer'}))
-vim.keymap.set('n', '<leader>wx', ':bdelete!<CR>', vim.tbl_extend('force', opts, { desc = 'Close buffer'})) -- close buffer
+vim.keymap.set('n', '<leader>wx', ':Bdelete!<CR>', vim.tbl_extend('force', opts, { desc = 'Close buffer'})) -- close buffer
 
 -- Window management
 vim.keymap.set('n', '<leader>wv', '<C-w>v', vim.tbl_extend('force', opts, { desc = 'Split window vertically'})) -- split window vertically

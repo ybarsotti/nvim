@@ -39,7 +39,7 @@ return {
 
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
+        { '<leader>d', group = '[D]ebugger' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },

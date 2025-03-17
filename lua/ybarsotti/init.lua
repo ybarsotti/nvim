@@ -11,6 +11,10 @@ vim.g.have_nerd_font = true
 vim.g.mkdp_filetypes = { 'markdown' }
 vim.g.mkdp_auto_start = 1
 
+-- Codeium Autocomplete
+vim.g.codeium_enabled = false
+vim.g.codeium_disable_bindings = 1
+
 -- [[ Setting options ]]
 require 'ybarsotti.options'
 

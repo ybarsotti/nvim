@@ -1,17 +1,17 @@
 return {
   'nvim-lualine/lualine.nvim',
   config = function()
-    local trouble = require("trouble")
-    local symbols = trouble.statusline({
-      mode = "lsp_document_symbols",
+    local trouble = require 'trouble'
+    local symbols = trouble.statusline {
+      mode = 'lsp_document_symbols',
       groups = {},
       title = false,
       filter = { range = true },
-      format = "{kind_icon}{symbol.name:Normal}",
+      format = '{kind_icon}{symbol.name:Normal}',
       -- The following line is needed to fix the background color
       -- Set it to the lualine section you want to use
-      hl_group = "lualine_c_normal",
-    })
+      hl_group = 'lualine_c_normal',
+    }
 
     local mode = {
       'mode',
@@ -64,14 +64,18 @@ return {
       sections = {
         lualine_a = { mode },
         lualine_b = { 'branch' },
-        lualine_c = { 
-          vim.tbl_extend('force', filename, {
+        lualine_c = {
+           vim.tbl_extend('force', filename, {
             symbols.get,
-            cond = symbols.has
-          })
+            cond = symbols.has,
+          }),
+          function()
+            local codeium_status =  vim.api.nvim_call_function('codeium#GetStatusString', {})
+            return "Codeium: " .. codeium_status
+          end,
         },
         lualine_x = { diagnostics, diff, { 'encoding', cond = hide_in_width }, { 'filetype', cond = hide_in_width } },
-        lualine_y = { 'location' },
+        lualine_y = { 'location', 'lsp_status' },
         lualine_z = { 'progress' },
       },
       inactive_sections = {

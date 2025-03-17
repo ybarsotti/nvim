@@ -9,6 +9,7 @@
   "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
+  "codeium.vim": { "branch": "main", "commit": "000de972de76f357c03da14f4f8dd9a969d4fe8c" },
   "codesnap.nvim": { "branch": "main", "commit": "6400480aa6cc366cbd931146c429aaa64680dab9" },
   "conform.nvim": { "branch": "master", "commit": "db8a4a9edb217067b1d7a2e0362c74bfe9cc944d" },
   "cyberdream.nvim": { "branch": "main", "commit": "094e4eb33e7d078cbf2105604a4246092eb8046e" },

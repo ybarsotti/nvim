@@ -11,8 +11,9 @@ return {
         return vim.fn.executable 'make' == 1
       end,
     },
+    { 'sharkdp/fd' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
-
+    { 'BurntSushi/ripgrep' },
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
@@ -36,9 +37,12 @@ return {
           file_ignore_patterns = { 'node_modules', '.git', '.venv' },
           hidden = true,
         },
+        colorscheme = {
+          enable_preview = true,
+        },
       },
       live_grep = {
-        file_ignore_patterns = { 'node_modules', '.git', '.venv', 'package-lock.json', 'lazy-lock.json', 'yarn.lock', 'pylintrc'},
+        file_ignore_patterns = { 'node_modules', '.git', '.venv', 'package-lock.json', 'lazy-lock.json', 'yarn.lock', 'pylintrc' },
         additional_args = function(_)
           return { '--hidden' }
         end,
@@ -65,19 +69,15 @@ return {
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]search in existing [B]uffers' })
+    vim.keymap.set('n', '<leader>sm', builtin.marks, { desc = '[S]search [M]arks' })
 
-    -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
-      -- You can pass additional configuration to Telescope to change the theme, layout, etc.
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
         previewer = false,
       })
     end, { desc = '[/] Fuzzily search in current buffer' })
-
-    -- It's also possible to pass additional configuration options.
-    --  See `:help telescope.builtin.live_grep()` for information about particular keys
     vim.keymap.set('n', '<leader>s/', function()
       builtin.live_grep {
         grep_open_files = true,

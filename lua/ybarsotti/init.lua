@@ -15,6 +15,9 @@ vim.g.mkdp_auto_start = 1
 vim.g.codeium_enabled = false
 vim.g.codeium_disable_bindings = 1
 
+-- Theme
+vim.opt.termguicolors = true
+
 -- [[ Setting options ]]
 require 'ybarsotti.options'
 

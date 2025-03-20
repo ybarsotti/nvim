@@ -6,6 +6,26 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = true
+
+-- For the markdown plugin
+vim.g.mkdp_filetypes = { 'markdown' }
+vim.g.mkdp_auto_start = 1
+
+-- Codeium Autocomplete
+vim.g.codeium_enabled = false
+vim.g.codeium_disable_bindings = 1
+
+-- Theme
+vim.opt.termguicolors = true
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 

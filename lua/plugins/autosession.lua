@@ -11,6 +11,7 @@ return {
     { '<leader>wS', '<cmd>SessionSave<CR>', desc = 'Autosession: Save session' },
     { '<leader>wa', '<cmd>SessionToggleAutoSave<CR>', desc = 'Autosession: Toggle autosave' },
     { '<leader>wd', '<cmd>SessionPurgeOrphaned<CR>', desc = 'Autosession: Purge orphaned sessions' },
+    { '<leader>wD', '<cmd>SessionDelete<CR>', desc = 'Autosession: [D]elete session' },
   },
   opts = {
     bypass_save_filetypes = { 'alpha', 'dashboard' },

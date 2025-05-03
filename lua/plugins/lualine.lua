@@ -69,10 +69,10 @@ return {
             symbols.get,
             cond = symbols.has,
           }),
-          function()
-            local codeium_status =  vim.api.nvim_call_function('codeium#GetStatusString', {})
-            return "Codeium: " .. codeium_status
-          end,
+          -- function()
+          --   local codeium_status =  vim.api.nvim_call_function('codeium#GetStatusString', {})
+          --   return "Codeium: " .. codeium_status
+          -- end,
         },
         lualine_x = { diagnostics, diff, { 'encoding', cond = hide_in_width }, { 'filetype', cond = hide_in_width } },
         lualine_y = { 'location', 'lsp_status' },

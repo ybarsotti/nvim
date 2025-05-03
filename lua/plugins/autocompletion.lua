@@ -174,35 +174,30 @@ return {
           },
         },
         window = {
-          documentation = {
-            border = 'rounded',
-            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
-            zindex = 1000,
-          },
-          completion = {
-            winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
-            col_offset = 0,
-            side_padding = 0,
-          },
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         formatting = {
           fields = { 'kind', 'abbr', 'menu' },
           format = function(entry, vim_item)
+            local lspkind = require 'lspkind'
             local source_label = source_names[entry.source.name] or entry.source.name
 
-            -- Copilot custom icon
             if entry.source.name == 'copilot' then
-              vim_item.kind = ' ' .. kind_icons['Copilot'] .. ' '
+              vim_item.kind = ' ' .. (kind_icons['Copilot'] or '') .. ' '
               vim_item.menu = '[' .. source_label .. ']'
               return vim_item
             end
 
-            local kind = require('lspkind').cmp_format { mode = 'symbol_text', maxwidth = 90 }(entry, vim_item)
-            local strings = vim.split(kind.kind, '%s', { trimempty = true })
+            local kind = lspkind.cmp_format {
+              mode = 'symbol_text',
+              maxwidth = 90,
+              ellipsis_char = '...',
+            }(entry, vim_item)
 
+            local strings = vim.split(kind.kind, '%s', { trimempty = true })
             kind.kind = ' ' .. (strings[1] or '') .. ' '
             kind.menu = '[' .. source_label .. ']'
-
             return kind
           end,
         },

@@ -1,44 +1,36 @@
 local cmp_highlights = {
-  PmenuSel = { bg = "#282C34", fg = "NONE" },
-  Pmenu = { fg = "#C5CDD9", bg = "#22252A" },
+  PmenuSel = { bg = "#2C323C", fg = "NONE" },  -- Item selecionado (um pouco mais claro que o fundo da lista)
+  Pmenu = { fg = "#C8CCD4", bg = "#21252B" },  -- Fundo da lista de opções
 
-  CmpItemAbbrDeprecated = { fg = "#7E8294", bg = "NONE", strikethrough = true },
-  CmpItemAbbrMatch = { fg = "#82AAFF", bg = "NONE", bold = true },
-  CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bg = "NONE", bold = true },
-  CmpItemMenu = { fg = "#C792EA", bg = "NONE", italic = true },
+  CmpItemAbbrDeprecated = { fg = "#6C7086", strikethrough = true },
+  CmpItemAbbrMatch = { fg = "#82AAFF", bold = true },
+  CmpItemAbbrMatchFuzzy = { fg = "#82AAFF", bold = true },
 
-  CmpItemKindField = { fg = "#EED8DA", bg = "#B5585F" },
-  CmpItemKindProperty = { fg = "#EED8DA", bg = "#B5585F" },
-  CmpItemKindEvent = { fg = "#EED8DA", bg = "#B5585F" },
+  CmpItemMenu = { fg = "#C792EA", italic = true },
 
-  CmpItemKindText = { fg = "#C3E88D", bg = "#9FBD73" },
-  CmpItemKindEnum = { fg = "#C3E88D", bg = "#9FBD73" },
-  CmpItemKindKeyword = { fg = "#C3E88D", bg = "#9FBD73" },
+  CmpItemKindCopilot = { fg = "#000000", bg = "#6CC644" },
 
-  CmpItemKindConstant = { fg = "#FFE082", bg = "#D4BB6C" },
-  CmpItemKindConstructor = { fg = "#FFE082", bg = "#D4BB6C" },
-  CmpItemKindReference = { fg = "#FFE082", bg = "#D4BB6C" },
-
-  CmpItemKindFunction = { fg = "#EADFF0", bg = "#A377BF" },
-  CmpItemKindStruct = { fg = "#EADFF0", bg = "#A377BF" },
-  CmpItemKindClass = { fg = "#EADFF0", bg = "#A377BF" },
-  CmpItemKindModule = { fg = "#EADFF0", bg = "#A377BF" },
-  CmpItemKindOperator = { fg = "#EADFF0", bg = "#A377BF" },
-
-  CmpItemKindVariable = { fg = "#C5CDD9", bg = "#7E8294" },
-  CmpItemKindFile = { fg = "#C5CDD9", bg = "#7E8294" },
-
-  CmpItemKindUnit = { fg = "#F5EBD9", bg = "#D4A959" },
-  CmpItemKindSnippet = { fg = "#F5EBD9", bg = "#D4A959" },
-  CmpItemKindFolder = { fg = "#F5EBD9", bg = "#D4A959" },
-
-  CmpItemKindMethod = { fg = "#DDE5F5", bg = "#6C8ED4" },
-  CmpItemKindValue = { fg = "#DDE5F5", bg = "#6C8ED4" },
-  CmpItemKindEnumMember = { fg = "#DDE5F5", bg = "#6C8ED4" },
-
-  CmpItemKindInterface = { fg = "#D8EEEB", bg = "#58B5A8" },
-  CmpItemKindColor = { fg = "#D8EEEB", bg = "#58B5A8" },
-  CmpItemKindTypeParameter = { fg = "#D8EEEB", bg = "#58B5A8" },
+  CmpItemKindFunction = { fg = "#FFFFFF", bg = "#A377BF" },
+  CmpItemKindMethod = { fg = "#FFFFFF", bg = "#6C8ED4" },
+  CmpItemKindVariable = { fg = "#FFFFFF", bg = "#7E8294" },
+  CmpItemKindClass = { fg = "#FFFFFF", bg = "#A377BF" },
+  CmpItemKindInterface = { fg = "#FFFFFF", bg = "#58B5A8" },
+  CmpItemKindText = { fg = "#FFFFFF", bg = "#9FBD73" },
+  CmpItemKindKeyword = { fg = "#FFFFFF", bg = "#9FBD73" },
+  CmpItemKindProperty = { fg = "#FFFFFF", bg = "#B5585F" },
+  CmpItemKindUnit = { fg = "#FFFFFF", bg = "#D4A959" },
+  CmpItemKindEnum = { fg = "#FFFFFF", bg = "#9FBD73" },
+  CmpItemKindSnippet = { fg = "#FFFFFF", bg = "#D4A959" },
+  CmpItemKindFile = { fg = "#FFFFFF", bg = "#7E8294" },
+  CmpItemKindFolder = { fg = "#FFFFFF", bg = "#D4A959" },
+  CmpItemKindConstructor = { fg = "#FFFFFF", bg = "#D4BB6C" },
+  CmpItemKindValue = { fg = "#FFFFFF", bg = "#6C8ED4" },
+  CmpItemKindColor = { fg = "#FFFFFF", bg = "#58B5A8" },
+  CmpItemKindReference = { fg = "#FFFFFF", bg = "#D4BB6C" },
+  CmpItemKindEnumMember = { fg = "#FFFFFF", bg = "#6C8ED4" },
+  CmpItemKindTypeParameter = { fg = "#FFFFFF", bg = "#58B5A8" },
+  CmpItemKindOperator = { fg = "#FFFFFF", bg = "#A377BF" },
+  CmpItemKindModule = { fg = "#FFFFFF", bg = "#A377BF" },
 }
 
 for group, opts in pairs(cmp_highlights) do

@@ -1,6 +1,6 @@
 local create_user_cmd = vim.api.nvim_create_user_command
 
-create_user_cmd('EnableCopilot', function()
+create_user_cmd('CopilotEnable', function()
   require('copilot').setup {
     suggestion = { enabled = false },
     panel = { enabled = false },
@@ -24,7 +24,7 @@ create_user_cmd('EnableCopilot', function()
   vim.notify('Copilot activated', vim.log.levels.INFO, { title = 'Copilot' })
 end, {})
 
-create_user_cmd('DisableCopilot', function()
+create_user_cmd('CopilotDisable', function()
   require('copilot').setup {
     suggestion = { enabled = false },
     panel = { enabled = false },

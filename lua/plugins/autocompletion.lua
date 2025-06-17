@@ -1,9 +1,10 @@
 local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+    return false
+  end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match '^%s*$' == nil
 end
-
 
 return {
   { -- Autocompletion
@@ -43,36 +44,38 @@ return {
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require 'lspkind'
       luasnip.config.setup {}
 
       local kind_icons = {
-        Text = '󰉿',
-        Method = 'm',
-        Function = '󰊕',
-        Constructor = '',
-        Field = '',
-        Variable = '󰆧',
-        Class = '󰌗',
-        Interface = '',
-        Module = '',
-        Property = '',
-        Unit = '',
-        Value = '󰎠',
-        Enum = '',
-        Keyword = '󰌋',
-        Snippet = '',
-        Color = '󰏘',
-        File = '󰈙',
-        Reference = '',
-        Folder = '󰉋',
-        EnumMember = '',
-        Constant = '󰇽',
-        Struct = '',
-        Event = '',
-        Operator = '󰆕',
-        TypeParameter = '󰊄',
+        Class = ' ',
+        Color = ' ',
+        Constant = ' ',
+        Constructor = ' ',
+        Enum = ' ',
+        EnumMember = ' ',
+        Event = ' ',
+        Field = ' ',
+        File = ' ',
+        Folder = ' ',
+        Function = ' ',
+        Interface = ' ',
+        Keyword = ' ',
+        Method = ' ',
+        Module = ' ',
+        Operator = ' ',
+        Property = ' ',
+        Reference = ' ',
+        Snippet = ' ',
+        Struct = ' ',
+        Text = ' ',
+        TypeParameter = ' ',
+        Unit = ' ',
+        Value = ' ',
+        Variable = ' ',
         Copilot = '',
       }
+
       local source_names = {
         nvim_lsp = 'LSP',
         nvim_lua = 'Lua',
@@ -82,6 +85,27 @@ return {
         copilot = 'Copilot',
         cmdline = 'Cmd',
       }
+
+      local select_next_item = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+        elseif luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+      end
+
+      local select_prev_item = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end
+
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -89,35 +113,11 @@ return {
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
-        -- For an understanding of why these mappings were
-        -- chosen, you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-          -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
           ['<C-y>'] = cmp.mapping.confirm { select = true },
-
           ['<C-t>'] = cmp.mapping.complete {},
-
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -128,26 +128,8 @@ return {
               luasnip.jump(-1)
             end
           end, { 'i', 's' }),
-
-          -- Select next/previous item with Tab / Shift + Tab
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-            elseif luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
+          ['<C-j>'] = cmp.mapping(select_next_item, { 'i', 's' }),
+          ['<C-k>'] = cmp.mapping(select_prev_item, { 'i', 's' }),
         },
         sources = {
           {
@@ -159,6 +141,7 @@ return {
           { name = 'nvim_lsp', group_index = 2 },
           { name = 'luasnip', group_index = 2 },
           { name = 'buffer', group_index = 2 },
+          { name = 'emoji', group_index = 2 },
           { name = 'path', group_index = 2 },
         },
         sorting = {
@@ -184,28 +167,21 @@ return {
           documentation = cmp.config.window.bordered(),
         },
         formatting = {
-          fields = { 'kind', 'abbr', 'menu' },
-          format = function(entry, vim_item)
-            local lspkind = require 'lspkind'
-            local source_label = source_names[entry.source.name] or entry.source.name
-
-            if entry.source.name == 'copilot' then
-              vim_item.kind = ' ' .. (kind_icons['Copilot'] or '') .. ' '
-              vim_item.menu = '[' .. source_label .. ']'
+          format = lspkind.cmp_format {
+            mode = 'symbol_text',
+            symbol_map = kind_icons,
+            maxwidth = {
+              menu = 80,
+              abbr = 80,
+            },
+            ellipsis_char = '...',
+            show_labelDetails = true,
+            before = function(entry, vim_item)
+              vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+              vim_item.dateMDYenu = source_names[entry.source.name]
               return vim_item
-            end
-
-            local kind = lspkind.cmp_format {
-              mode = 'symbol_text',
-              maxwidth = 90,
-              ellipsis_char = '...',
-            }(entry, vim_item)
-
-            local strings = vim.split(kind.kind, '%s', { trimempty = true })
-            kind.kind = ' ' .. (strings[1] or '') .. ' '
-            kind.menu = '[' .. source_label .. ']'
-            return kind
-          end,
+            end,
+          },
         },
       }
     end,

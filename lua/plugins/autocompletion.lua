@@ -1,3 +1,10 @@
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+end
+
+
 return {
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -122,11 +129,9 @@ return {
             end
           end, { 'i', 's' }),
 
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
           -- Select next/previous item with Tab / Shift + Tab
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if cmp.visible() and has_words_before() then
               cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -150,16 +155,17 @@ return {
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
+          { name = 'copilot', group_index = 2 },
           { name = 'nvim_lsp', group_index = 2 },
           { name = 'luasnip', group_index = 2 },
           { name = 'buffer', group_index = 2 },
           { name = 'path', group_index = 2 },
-          -- { name = 'copilot', group_index = 2 },
         },
         sorting = {
           priority_weight = 2,
           comparators = {
             require('copilot_cmp.comparators').prioritize,
+
             -- Below is the default comparitor list and order for nvim-cmp
             cmp.config.compare.offset,
             -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
@@ -206,20 +212,27 @@ return {
   },
   -- AI CMP
   {
-    'zbirenbaum/copilot-cmp',
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
     event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {
+        panel = {
+          enabled = false,
+        },
+        suggestion = {
+          enabled = false,
+        },
+      }
+    end,
+  },
+  {
+    'zbirenbaum/copilot-cmp',
     config = function()
       require('copilot_cmp').setup()
     end,
     dependencies = {
       'zbirenbaum/copilot.lua',
-      cmd = 'Copilot',
-      config = function()
-        -- require('copilot').setup {
-        --   suggestion = { enabled = false },
-        --   panel = { enabled = false },
-        -- }
-      end,
     },
   },
 }

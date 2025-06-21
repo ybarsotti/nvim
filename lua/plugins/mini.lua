@@ -17,6 +17,11 @@ return {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      local diff = require 'mini.diff'
+      diff.setup {
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      }
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },

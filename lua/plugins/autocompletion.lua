@@ -137,6 +137,7 @@ return {
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
+          { name = 'codecompanion', group_index = 2 },
           { name = 'copilot', group_index = 2 },
           { name = 'nvim_lsp', group_index = 2 },
           { name = 'luasnip', group_index = 2 },
@@ -186,22 +187,7 @@ return {
       }
     end,
   },
-  -- AI CMP
-  {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
-    config = function()
-      require('copilot').setup {
-        panel = {
-          enabled = false,
-        },
-        suggestion = {
-          enabled = false,
-        },
-      }
-    end,
-  },
+  -- Transforms AI into a auto-completion source for nvim-cmp
   {
     'zbirenbaum/copilot-cmp',
     config = function()

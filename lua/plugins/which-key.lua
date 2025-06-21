@@ -38,6 +38,7 @@ return {
       },
 
       spec = {
+        { '<leader>a', group = '[A]i Assistant (Code companion)' },
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ebugger' },
         { '<leader>w', group = '[W]orkspace' },

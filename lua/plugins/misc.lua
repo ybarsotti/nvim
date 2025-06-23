@@ -78,11 +78,73 @@ return {
       open_for_directories = true,
     },
   },
-  { -- Markdown previewer
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    ft = { 'markdown' },
-    build = "cd app && npm ci",
-    opts = {}
+  -- { -- Markdown previewer
+  --   'iamcco/markdown-preview.nvim',
+  --   cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+  --   ft = { 'markdown' },
+  --   build = 'cd app && npm ci',
+  --   opts = {},
+  -- },
+  {
+    'HakonHarnes/img-clip.nvim',
+    event = 'VeryLazy',
+    opts = {
+      filetypes = {
+        codecompanion = {
+          prompt_for_file_name = false,
+          template = '[Image]($FILE_PATH)',
+          use_absolute_path = true,
+        },
+      },
+    },
+    keys = {
+      { '<leader>p', '<cmd>PasteImage<cr>', desc = 'Img clip: [P]aste image from system clipboard' },
+    },
+  },
+  {
+    'OXY2DEV/markview.nvim',
+    lazy = false,
+    opts = function()
+      local function conceal_tag(icon, hl_group)
+        return {
+          on_node = { hl_group = hl_group },
+          on_closing_tag = { conceal = '' },
+          on_opening_tag = {
+            conceal = '',
+            virt_text_pos = 'inline',
+            virt_text = { { icon .. ' ', hl_group } },
+          },
+        }
+      end
+
+      return {
+        preview = {
+          filetypes = { 'markdown', 'codecompanion' },
+          icon_provider = 'devicons',
+          ignore_buftypes = {},
+        },
+        html = {
+          container_elements = {
+            ['^buf$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+            ['^file$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+            ['^help$'] = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
+            ['^image$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+            ['^symbols$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+            ['^url$'] = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
+            ['^var$'] = conceal_tag('', 'CodeCompanionChatVariable'),
+            ['^tool$'] = conceal_tag('', 'CodeCompanionChatTool'),
+            ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
+            ['^group$'] = conceal_tag('', 'CodeCompanionChatToolGroup'),
+          },
+        },
+      }
+    end,
+  },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown', 'codecompanion' },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
   },
 }

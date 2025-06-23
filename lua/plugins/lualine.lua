@@ -55,7 +55,7 @@ return {
         symbols = {
           spinners = 'bouncing_ball',
         },
-        show_colors = true
+        show_colors = true,
       }
 
       require('lualine').setup {
@@ -80,7 +80,13 @@ return {
             --   cond = symbols.has,
             -- }),
           },
-          lualine_x = { copilot, 'lsp_status', { 'filetype', cond = hide_in_width }, { 'encoding', cond = hide_in_width } },
+          lualine_x = {
+            copilot,
+            { require 'mcphub.extensions.lualine' },
+            'lsp_status',
+            { 'filetype', cond = hide_in_width },
+            { 'encoding', cond = hide_in_width },
+          },
           lualine_y = { 'location' },
           lualine_z = { 'progress' },
         },

@@ -78,13 +78,14 @@ return {
       open_for_directories = true,
     },
   },
-  -- { -- Markdown previewer
-  --   'iamcco/markdown-preview.nvim',
-  --   cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-  --   ft = { 'markdown' },
-  --   build = 'cd app && npm ci',
-  --   opts = {},
-  -- },
+  { -- Markdown previewer
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = 'cd app && npm ci',
+    enabled = false,
+    opts = {},
+  },
   {
     'HakonHarnes/img-clip.nvim',
     event = 'VeryLazy',
@@ -103,6 +104,7 @@ return {
   },
   {
     'OXY2DEV/markview.nvim',
+    enabled = false,
     lazy = false,
     opts = function()
       local function conceal_tag(icon, hl_group)
@@ -123,20 +125,142 @@ return {
           icon_provider = 'devicons',
           ignore_buftypes = {},
         },
+
         html = {
           container_elements = {
-            ['^buf$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-            ['^file$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-            ['^help$'] = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
-            ['^image$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-            ['^symbols$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-            ['^url$'] = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
-            ['^var$'] = conceal_tag('', 'CodeCompanionChatVariable'),
-            ['^tool$'] = conceal_tag('', 'CodeCompanionChatTool'),
-            ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
-            ['^group$'] = conceal_tag('', 'CodeCompanionChatToolGroup'),
+            ['^buf$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^file$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^group$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatToolGroup',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatToolGroup' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^help$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { '󰘥 ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^image$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^symbols$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^tool$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatTool',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatTool' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^url$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { '󰖟 ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^user_prompt$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatTool',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatTool' } },
+                virt_text_pos = 'inline',
+              },
+            },
+            ['^var$'] = {
+              on_closing_tag = {
+                conceal = '',
+              },
+              on_node = {
+                hl_group = 'CodeCompanionChatVariable',
+              },
+              on_opening_tag = {
+                conceal = '',
+                virt_text = { { ' ', 'CodeCompanionChatVariable' } },
+                virt_text_pos = 'inline',
+              },
+            },
           },
         },
+        markdown_inline = {},
       }
     end,
   },

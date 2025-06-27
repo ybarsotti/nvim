@@ -139,7 +139,10 @@ return {
       },
       strategies = {
         chat = {
-          adapter = 'copilot',
+          adapter = {
+            name = 'copilot',
+            model = 'claude-3.7-sonnet',
+          },
           roles = {
             ---The header name for the LLM's messages
             ---@type string|fun(adapter: CodeCompanion.Adapter): string
@@ -484,7 +487,7 @@ return {
                 max_refreshes = 3,
               },
               ---On exiting and entering neovim, loads the last chat on opening chat
-              continue_last_chat = false,
+              continue_last_chat = true,
               ---When chat is cleared with `gx` delete the chat from history
               delete_on_clearing_chat = true,
               ---Directory path to save the chats

@@ -79,6 +79,21 @@ return {
     version = '*',
     build = 'uv tool upgrade vectorcode', -- This helps keeping the CLI up-to-date
     dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local cacher = require('vectorcode.config').get_cacher_backend()
+      local cacher_utils = require('vectorcode.cacher').utils
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          cacher_utils.async_check('config', function()
+            cacher.register_buffer(bufnr, {
+              n_query = 10,
+            })
+          end, nil)
+        end,
+        desc = 'Register buffer for VectorCode',
+      })
+    end,
   },
   -- Code completion plugin that integrates with mcphub
   {

@@ -6,12 +6,6 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- For nvim-ufo (Folding)
-vim.o.foldcolumn = '1'
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)

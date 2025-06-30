@@ -244,7 +244,6 @@ return {
     --
     --  You can press `g?` for help in this menu.
     require('mason').setup()
-    require('ufo').setup()
 
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {

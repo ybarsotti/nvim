@@ -2,18 +2,6 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     config = function()
-      local trouble = require 'trouble'
-      local symbols = trouble.statusline {
-        mode = 'lsp_document_symbols',
-        groups = {},
-        title = false,
-        filter = { range = true },
-        format = '{kind_icon}{symbol.name:Normal}',
-        -- The following line is needed to fix the background color
-        -- Set it to the lualine section you want to use
-        hl_group = 'lualine_c_normal',
-      }
-
       local mode = {
         'mode',
         fmt = function(str)
@@ -83,11 +71,25 @@ return {
           lualine_x = {
             copilot,
             { require 'mcphub.extensions.lualine' },
+            {
+              function()
+                return require('vectorcode.integrations').lualine()[1]()
+              end,
+              cond = function()
+                if package.loaded['vectorcode'] == nil then
+                  return false
+                else
+                  return require('vectorcode.integrations').lualine().cond()
+                end
+              end,
+            },
             'lsp_status',
             { 'filetype', cond = hide_in_width },
             { 'encoding', cond = hide_in_width },
           },
-          lualine_y = { 'location' },
+          lualine_y = {
+            'location',
+          },
           lualine_z = { 'progress' },
         },
         inactive_sections = {

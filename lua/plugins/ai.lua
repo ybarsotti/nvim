@@ -60,6 +60,12 @@ Identify any issues related to:
 
 return {
   {
+    'milanglacier/minuet-ai.nvim',
+    config = function()
+      require('minuet').setup {}
+    end,
+  },
+  {
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     event = 'InsertEnter',

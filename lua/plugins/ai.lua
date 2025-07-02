@@ -1,4 +1,3 @@
-local PROMPTS = require 'plugins.code-companion.prompts'
 return {
   {
     'milanglacier/minuet-ai.nvim',
@@ -53,7 +52,37 @@ return {
       { '<leader>am', '<Esc><cmd>MCPHub<cr>', desc = 'MCPHub: Open' },
     },
     config = function()
-      require('mcphub').setup()
+      require('mcphub').setup {
+        config = vim.fn.expand '~/.config/mcphub/servers.json',
+        auto_toggle_mcp_servers = true,
+        extensions = {
+          avante = {
+            make_slash_commands = true,
+          },
+        },
+
+        --- Plugin specific options-------------------
+        native_servers = {}, -- add your custom lua native servers here
+        ui = {
+          window = {
+            width = 0.8, -- 0-1 (ratio); "50%" (percentage); 50 (raw number)
+            height = 0.8, -- 0-1 (ratio); "50%" (percentage); 50 (raw number)
+            align = 'center', -- "center", "top-left", "top-right", "bottom-left", "bottom-right", "top", "bottom", "left", "right"
+            relative = 'editor',
+            zindex = 50,
+            border = 'rounded', -- "none", "single", "double", "rounded", "solid", "shadow"
+          },
+          wo = { -- window-scoped options (vim.wo)
+            winhl = 'Normal:MCPHubNormal,FloatBorder:MCPHubBorder',
+          },
+        },
+        log = {
+          level = vim.log.levels.WARN,
+          to_file = false,
+          file_path = nil,
+          prefix = 'MCPHub',
+        },
+      }
     end,
   },
   {
@@ -81,6 +110,7 @@ return {
       require('codecompanion').setup(opts)
     end,
     opts = function()
+      local PROMPTS = require 'plugins.code-companion.prompts'
       return {
         adapters = {
           -- Local model adapter for Ollama

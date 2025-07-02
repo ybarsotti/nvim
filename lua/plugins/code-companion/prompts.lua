@@ -135,7 +135,7 @@ local PROMPT_LIBRARY = {
       {
         role = 'user',
         content = function(context)
-          local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+          local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line, { show_line_numbers = true })
 
           return 'Please explain how the following code works:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
         end,

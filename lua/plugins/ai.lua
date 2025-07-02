@@ -202,6 +202,7 @@ return {
           },
           opts = {
             completion_provider = 'cmp', -- blink|cmp|coc|default
+            log_level = 'DEBUG',
           },
           inline = {
             adapter = 'copilot',

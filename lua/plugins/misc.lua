@@ -269,6 +269,11 @@ return {
     ft = { 'markdown', 'codecompanion' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      render_modes = true, -- Render in ALL modes
+      sign = {
+        enabled = false, -- Turn off in the status column
+      },
+    },
   },
 }

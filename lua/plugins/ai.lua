@@ -134,6 +134,12 @@ return {
       { '<leader>an', '<Esc><cmd>CodeCompanion /naming<cr>', mode = { 'v' }, desc = 'CodeCompanion: Better naming' },
       { '<leader>ah', '<Esc><cmd>CodeCompanionHistory<cr>', mode = { 'n' }, desc = 'CodeCompanion extension: History' },
     },
+    config = function(_, opts)
+      local spinner = require 'plugins.code-companion.spinner'
+      spinner:init()
+      -- Setup the entire opts table
+      require('codecompanion').setup(opts)
+    end,
     opts = function()
       return {
         adapters = {
@@ -180,7 +186,13 @@ return {
             keymaps = {
               send = {
                 modes = { n = '<C-s>', i = '<C-s>' },
-                opts = {},
+                callback = function(chat)
+                  vim.cmd 'stopinsert'
+                  chat:submit()
+                  chat:add_buf_message { role = 'llm', content = '' }
+                end,
+                index = 1,
+                description = 'Send',
               },
               close = {
                 modes = { n = '<Esc>', i = '<Esc>' },

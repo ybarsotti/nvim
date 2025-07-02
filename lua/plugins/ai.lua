@@ -128,390 +128,430 @@ return {
       { '<leader>an', '<Esc><cmd>CodeCompanion /naming<cr>', mode = { 'v' }, desc = 'CodeCompanion: Better naming' },
       { '<leader>ah', '<Esc><cmd>CodeCompanionHistory<cr>', mode = { 'n' }, desc = 'CodeCompanion extension: History' },
     },
-    opts = {
-      adapters = {
-        -- Local model adapter for Ollama
-        llama3 = function()
-          return require('codecompanion.adapters').extend('ollama', {
-            name = 'llama3',
-            env = {
-              url = 'http://localhost:8080',
-              chat_url = '/v1/chat/completions',
-              models_endpoint = '/v1/models',
-            },
-            schema = {
-              model = {
-                default = 'unsloth/Devstral-Small-2505-GGUF',
+    opts = function()
+      return {
+        adapters = {
+          -- Local model adapter for Ollama
+          llama3 = function()
+            return require('codecompanion.adapters').extend('ollama', {
+              name = 'llama3',
+              env = {
+                url = 'http://localhost:8080',
+                chat_url = '/v1/chat/completions',
+                models_endpoint = '/v1/models',
               },
-              num_ctx = {
-                default = 128000,
+              schema = {
+                model = {
+                  default = 'unsloth/Devstral-Small-2505-GGUF',
+                },
+                num_ctx = {
+                  default = 128000,
+                },
+                num_predict = {
+                  default = -1,
+                },
               },
-              num_predict = {
-                default = -1,
-              },
-            },
-          })
-        end,
-      },
-      strategies = {
-        chat = {
-          adapter = {
-            name = 'copilot',
-            model = 'claude-3.7-sonnet',
-          },
-          roles = {
-            ---The header name for the LLM's messages
-            ---@type string|fun(adapter: CodeCompanion.Adapter): string
-            llm = function(adapter)
-              return 'CodeCompanion (' .. adapter.formatted_name .. ')'
-            end,
-
-            ---The header name for your messages
-            ---@type string
-            user = 'Barsotti',
-          },
-          keymaps = {
-            send = {
-              modes = { n = '<C-s>', i = '<C-s>' },
-              opts = {},
-            },
-            close = {
-              modes = { n = '<Esc>', i = '<Esc>' },
-              opts = {},
-            },
-          },
+            })
+          end,
         },
-        opts = {
-          completion_provider = 'cmp', -- blink|cmp|coc|default
-        },
-        inline = {
-          adapter = 'copilot',
-        },
-        cmd = {
-          adapter = 'copilot',
-        },
-      },
-      prompt_library = {
-        ['Explain'] = {
-          strategy = 'chat',
-          description = 'Explain how code in a buffer works',
-          opts = {
-            default_prompt = true,
-            modes = { 'v' },
-            short_name = 'explain',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_EXPLAIN,
-              opts = {
-                visible = false,
-              },
+        strategies = {
+          chat = {
+            adapter = {
+              name = 'copilot',
+              model = 'claude-3.7-sonnet',
             },
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
-
-                return 'Please explain how the following code works:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
+            roles = {
+              ---The header name for the LLM's messages
+              ---@type string|fun(adapter: CodeCompanion.Adapter): string
+              llm = function(adapter)
+                return 'CodeCompanion (' .. adapter.formatted_name .. ')'
               end,
-              opts = {
-                contains_code = true,
-              },
-            },
-          },
-        },
-        ['Explain Code'] = {
-          strategy = 'chat',
-          description = 'Explain how code works',
-          opts = {
-            short_name = 'explain-code',
-            auto_submit = false,
-            is_slash_cmd = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_EXPLAIN,
-              opts = {
-                visible = false,
-              },
-            },
-            {
-              role = 'user',
-              content = [[Please explain how the following code works.]],
-            },
-          },
-        },
-        ['Inline Document'] = {
-          strategy = 'inline',
-          description = 'Add documentation for code.',
-          opts = {
-            modes = { 'v' },
-            short_name = 'inline-doc',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
-          },
-          prompts = {
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
 
-                return 'Please provide documentation in comment code for the following code and suggest to have better naming to improve readability.\n\n```'
-                  .. context.filetype
-                  .. '\n'
-                  .. code
-                  .. '\n```\n\n'
-              end,
-              opts = {
-                contains_code = true,
+              ---The header name for your messages
+              ---@type string
+              user = 'Barsotti',
+            },
+            keymaps = {
+              send = {
+                modes = { n = '<C-s>', i = '<C-s>' },
+                opts = {},
+              },
+              close = {
+                modes = { n = '<Esc>', i = '<Esc>' },
+                opts = {},
               },
             },
           },
-        },
-        ['Document'] = {
-          strategy = 'chat',
-          description = 'Write documentation for code.',
           opts = {
-            modes = { 'v' },
-            short_name = 'doc',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
+            completion_provider = 'cmp', -- blink|cmp|coc|default
           },
-          prompts = {
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+          inline = {
+            adapter = 'copilot',
+          },
+          cmd = {
+            adapter = 'copilot',
+          },
+        },
+        prompt_library = {
+          ['Explain'] = {
+            strategy = 'chat',
+            description = 'Explain how code in a buffer works',
+            opts = {
+              default_prompt = true,
+              modes = { 'v' },
+              short_name = 'explain',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_EXPLAIN,
+                opts = {
+                  visible = false,
+                },
+              },
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
 
-                return 'Please brief how it works and provide documentation in comment code for the following code. Also suggest to have better naming to improve readability.\n\n```'
-                  .. context.filetype
-                  .. '\n'
-                  .. code
-                  .. '\n```\n\n'
-              end,
-              opts = {
-                contains_code = true,
+                  return 'Please explain how the following code works:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
               },
             },
           },
-        },
-        ['Review'] = {
-          strategy = 'chat',
-          description = 'Review the provided code snippet.',
-          opts = {
-            modes = { 'v' },
-            short_name = 'review',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_REVIEW,
-              opts = {
-                visible = false,
+          ['Explain Code'] = {
+            strategy = 'chat',
+            description = 'Explain how code works',
+            opts = {
+              short_name = 'explain-code',
+              auto_submit = false,
+              is_slash_cmd = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_EXPLAIN,
+                opts = {
+                  visible = false,
+                },
+              },
+              {
+                role = 'user',
+                content = [[Please explain how the following code works.]],
               },
             },
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+          },
+          ['Inline Document'] = {
+            strategy = 'inline',
+            description = 'Add documentation for code.',
+            opts = {
+              modes = { 'v' },
+              short_name = 'inline-doc',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
+            },
+            prompts = {
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
 
-                return 'Please review the following code and provide suggestions for improvement then refactor the following code to improve its clarity and readability:\n\n```'
-                  .. context.filetype
-                  .. '\n'
-                  .. code
-                  .. '\n```\n\n'
-              end,
-              opts = {
-                contains_code = true,
+                  return 'Please provide documentation in comment code for the following code and suggest to have better naming to improve readability.\n\n```'
+                    .. context.filetype
+                    .. '\n'
+                    .. code
+                    .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
               },
             },
           },
-        },
-        ['Review Code'] = {
-          strategy = 'chat',
-          description = 'Review code and provide suggestions for improvement.',
-          opts = {
-            short_name = 'review-code',
-            auto_submit = false,
-            is_slash_cmd = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_REVIEW,
-              opts = {
-                visible = false,
-              },
+          ['Document'] = {
+            strategy = 'chat',
+            description = 'Write documentation for code.',
+            opts = {
+              modes = { 'v' },
+              short_name = 'doc',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
             },
-            {
-              role = 'user',
-              content = 'Please review the following code and provide suggestions for improvement then refactor the following code to improve its clarity and readability.',
-            },
-          },
-        },
-        ['Refactor'] = {
-          strategy = 'inline',
-          description = 'Refactor the provided code snippet.',
-          opts = {
-            modes = { 'v' },
-            short_name = 'refactor',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_REFACTOR,
-              opts = {
-                visible = false,
-              },
-            },
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+            prompts = {
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
 
-                return 'Please refactor the following code to improve its clarity and readability:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
-              end,
-              opts = {
-                contains_code = true,
+                  return 'Please brief how it works and provide documentation in comment code for the following code. Also suggest to have better naming to improve readability.\n\n```'
+                    .. context.filetype
+                    .. '\n'
+                    .. code
+                    .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
               },
             },
           },
-        },
-        ['Refactor Code'] = {
-          strategy = 'chat',
-          description = 'Refactor the provided code snippet.',
-          opts = {
-            short_name = 'refactor-code',
-            auto_submit = false,
-            is_slash_cmd = true,
-          },
-          prompts = {
-            {
-              role = 'system',
-              content = COPILOT_REFACTOR,
-              opts = {
-                visible = false,
+          ['Review'] = {
+            strategy = 'chat',
+            description = 'Review the provided code snippet.',
+            opts = {
+              modes = { 'v' },
+              short_name = 'review',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_REVIEW,
+                opts = {
+                  visible = false,
+                },
               },
-            },
-            {
-              role = 'user',
-              content = 'Please refactor the following code to improve its clarity and readability.',
-            },
-          },
-        },
-        ['Naming'] = {
-          strategy = 'inline',
-          description = 'Give betting naming for the provided code snippet.',
-          opts = {
-            modes = { 'v' },
-            short_name = 'naming',
-            auto_submit = true,
-            user_prompt = false,
-            stop_context_insertion = true,
-          },
-          prompts = {
-            {
-              role = 'user',
-              content = function(context)
-                local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
 
-                return 'Please provide better names for the following variables and functions:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
-              end,
-              opts = {
-                contains_code = true,
+                  return 'Please review the following code and provide suggestions for improvement then refactor the following code to improve its clarity and readability:\n\n```'
+                    .. context.filetype
+                    .. '\n'
+                    .. code
+                    .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
+              },
+            },
+          },
+          ['Review Code'] = {
+            strategy = 'chat',
+            description = 'Review code and provide suggestions for improvement.',
+            opts = {
+              short_name = 'review-code',
+              auto_submit = false,
+              is_slash_cmd = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_REVIEW,
+                opts = {
+                  visible = false,
+                },
+              },
+              {
+                role = 'user',
+                content = 'Please review the following code and provide suggestions for improvement then refactor the following code to improve its clarity and readability.',
+              },
+            },
+          },
+          ['Refactor'] = {
+            strategy = 'inline',
+            description = 'Refactor the provided code snippet.',
+            opts = {
+              modes = { 'v' },
+              short_name = 'refactor',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_REFACTOR,
+                opts = {
+                  visible = false,
+                },
+              },
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+
+                  return 'Please refactor the following code to improve its clarity and readability:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
+              },
+            },
+          },
+          ['Refactor Code'] = {
+            strategy = 'chat',
+            description = 'Refactor the provided code snippet.',
+            opts = {
+              short_name = 'refactor-code',
+              auto_submit = false,
+              is_slash_cmd = true,
+            },
+            prompts = {
+              {
+                role = 'system',
+                content = COPILOT_REFACTOR,
+                opts = {
+                  visible = false,
+                },
+              },
+              {
+                role = 'user',
+                content = 'Please refactor the following code to improve its clarity and readability.',
+              },
+            },
+          },
+          ['Naming'] = {
+            strategy = 'inline',
+            description = 'Give betting naming for the provided code snippet.',
+            opts = {
+              modes = { 'v' },
+              short_name = 'naming',
+              auto_submit = true,
+              user_prompt = false,
+              stop_context_insertion = true,
+            },
+            prompts = {
+              {
+                role = 'user',
+                content = function(context)
+                  local code = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+
+                  return 'Please provide better names for the following variables and functions:\n\n```' .. context.filetype .. '\n' .. code .. '\n```\n\n'
+                end,
+                opts = {
+                  contains_code = true,
+                },
+              },
+            },
+          },
+          ['Better Naming'] = {
+            strategy = 'chat',
+            description = 'Give betting naming for the provided code snippet.',
+            opts = {
+              short_name = 'better-naming',
+              auto_submit = false,
+              is_slash_cmd = true,
+            },
+            prompts = {
+              {
+                role = 'user',
+                content = 'Please provide better names for the following variables and functions.',
               },
             },
           },
         },
-        ['Better Naming'] = {
-          strategy = 'chat',
-          description = 'Give betting naming for the provided code snippet.',
-          opts = {
-            short_name = 'better-naming',
-            auto_submit = false,
-            is_slash_cmd = true,
+        display = {
+          chat = {
+            intro_message = 'Hey Barsotti ✨! How can I help You? Press ? for options',
+            show_header_separator = true, -- Show header separators in the chat buffer? Set this to false if you're using an external markdown formatting plugin
+            separator = '─', -- The separator between the different messages in the chat buffer
+            show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
+            show_settings = true, -- Show LLM settings at the top of the chat buffer?
+            show_token_count = true, -- Show the token count for each response?
+            start_in_insert_mode = false, -- Open the chat buffer in insert mode?
           },
-          prompts = {
-            {
-              role = 'user',
-              content = 'Please provide better names for the following variables and functions.',
+        },
+        extensions = {
+          mcphub = {
+            callback = 'mcphub.extensions.codecompanion',
+            opts = {
+              make_vars = true,
+              make_slash_commands = true,
+              show_result_in_chat = true,
+            },
+          },
+          history = {
+            enabled = true,
+            opts = {
+              -- Keymap to open history from chat buffer (default: gh)
+              keymap = 'gh',
+              -- Keymap to save the current chat manually (when auto_save is disabled)
+              save_chat_keymap = 'sc',
+              -- Save all chats by default (disable to save only manually using 'sc')
+              auto_save = true,
+              -- Number of days after which chats are automatically deleted (0 to disable)
+              expiration_days = 90,
+              -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+              picker = 'telescope',
+              -- Customize picker keymaps (optional)
+              picker_keymaps = {
+                rename = { n = 'r', i = '<M-r>' },
+                delete = { n = 'd', i = '<M-d>' },
+                duplicate = { n = '<C-y>', i = '<C-y>' },
+              },
+              ---Automatically generate titles for new chats
+              auto_generate_title = true,
+              title_generation_opts = {
+                ---Number of user prompts after which to refresh the title (0 to disable)
+                refresh_every_n_prompts = 10, -- e.g., 3 to refresh after every 3rd user prompt
+                ---Maximum number of times to refresh the title (default: 3)
+                max_refreshes = 3,
+              },
+              ---On exiting and entering neovim, loads the last chat on opening chat
+              continue_last_chat = true,
+              ---When chat is cleared with `gx` delete the chat from history
+              delete_on_clearing_chat = true,
+              ---Directory path to save the chats
+              dir_to_save = vim.fn.stdpath 'data' .. '/codecompanion-history',
+              ---Enable detailed logging for history extension
+              enable_logging = false,
+              ---Optional filter function to control which chats are shown when browsing
+              chat_filter = nil, -- function(chat_data) return boolean end
+            },
+          },
+          vectorcode = {
+            ---@type VectorCode.CodeCompanion.ExtensionOpts
+            opts = {
+              tool_group = {
+                -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+                enabled = true,
+                -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+                -- if you use @vectorcode_vectorise, it'll be very handy to include
+                -- `file_search` here.
+                extras = {},
+                collapse = false, -- whether the individual tools should be shown in the chat
+              },
+              tool_opts = {
+                ---@type VectorCode.CodeCompanion.LsToolOpts
+                ls = {},
+                ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+                vectorise = {},
+                ---@type VectorCode.CodeCompanion.QueryToolOpts
+                query = {
+                  max_num = { chunk = -1, document = -1 },
+                  default_num = { chunk = 50, document = 10 },
+                  include_stderr = false,
+                  use_lsp = true,
+                  no_duplicate = true,
+                  chunk_mode = false,
+                  ---@type VectorCode.CodeCompanion.SummariseOpts
+                  summarise = {
+                    ---@type boolean|(fun(chat: CodeCompanion.Chat, results: VectorCode.QueryResult[]):boolean)|nil
+                    enabled = false,
+                    adapter = nil,
+                    query_augmented = true,
+                  },
+                },
+                files_ls = {},
+                files_rm = {},
+              },
             },
           },
         },
-      },
-      display = {
-        chat = {
-          intro_message = 'Hey Barsotti ✨! How can I help You? Press ? for options',
-          show_header_separator = true, -- Show header separators in the chat buffer? Set this to false if you're using an external markdown formatting plugin
-          separator = '─', -- The separator between the different messages in the chat buffer
-          show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
-          show_settings = true, -- Show LLM settings at the top of the chat buffer?
-          show_token_count = true, -- Show the token count for each response?
-          start_in_insert_mode = false, -- Open the chat buffer in insert mode?
-        },
-      },
-      extensions = {
-        mcphub = {
-          callback = 'mcphub.extensions.codecompanion',
-          opts = {
-            make_vars = true,
-            make_slash_commands = true,
-            show_result_in_chat = true,
-          },
-        },
-        history = {
-          enabled = true,
-          opts = {
-            -- Keymap to open history from chat buffer (default: gh)
-            keymap = 'gh',
-            -- Keymap to save the current chat manually (when auto_save is disabled)
-            save_chat_keymap = 'sc',
-            -- Save all chats by default (disable to save only manually using 'sc')
-            auto_save = true,
-            -- Number of days after which chats are automatically deleted (0 to disable)
-            expiration_days = 90,
-            -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
-            picker = 'telescope',
-            -- Customize picker keymaps (optional)
-            picker_keymaps = {
-              rename = { n = 'r', i = '<M-r>' },
-              delete = { n = 'd', i = '<M-d>' },
-              duplicate = { n = '<C-y>', i = '<C-y>' },
-            },
-            ---Automatically generate titles for new chats
-            auto_generate_title = true,
-            title_generation_opts = {
-              ---Number of user prompts after which to refresh the title (0 to disable)
-              refresh_every_n_prompts = 10, -- e.g., 3 to refresh after every 3rd user prompt
-              ---Maximum number of times to refresh the title (default: 3)
-              max_refreshes = 3,
-            },
-            ---On exiting and entering neovim, loads the last chat on opening chat
-            continue_last_chat = true,
-            ---When chat is cleared with `gx` delete the chat from history
-            delete_on_clearing_chat = true,
-            ---Directory path to save the chats
-            dir_to_save = vim.fn.stdpath 'data' .. '/codecompanion-history',
-            ---Enable detailed logging for history extension
-            enable_logging = false,
-            ---Optional filter function to control which chats are shown when browsing
-            chat_filter = nil, -- function(chat_data) return boolean end
-          },
-        },
-      },
-    },
+      }
+    end,
   },
 }

@@ -155,9 +155,7 @@ return {
           semanticTokens = true,
         },
       },
-      pyright = {
-        filetypes = { 'python' },
-      },
+      pyright = { },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
       dockerls = {},

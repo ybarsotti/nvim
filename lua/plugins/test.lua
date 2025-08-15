@@ -130,6 +130,40 @@ return {
         },
       }
 
+      dap.configurations.python = {
+        {
+          type = 'python',
+          request = 'launch',
+          name = 'Launch file (uv .venv)',
+          pythonPath = '${workspaceFolder}/.venv/bin/python',
+          program = '${file}',
+          console = 'integratedTerminal',
+        },
+        {
+          type = 'python',
+          request = 'launch',
+          name = 'Launch file (system python)',
+          program = '${file}',
+          console = 'integratedTerminal',
+        },
+        {
+          type = 'python',
+          request = 'attach',
+          name = 'Python: Attach to Container',
+          connect = {
+            host = 'localhost',
+            port = 5678,
+          },
+          pathMappings = {
+            {
+              localRoot = '${workspaceFolder}',
+              remoteRoot = '/app',
+            },
+          },
+          justMyCode = true,
+        },
+      }
+
       if not dap.adapters['node'] then
         dap.adapters['node'] = function(cb, config)
           if config.type == 'node' then

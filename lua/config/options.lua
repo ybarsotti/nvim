@@ -7,6 +7,15 @@ vim.opt.completeopt:append("popup")
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Search
+vim.opt.hlsearch = true  -- Highlight search results
+vim.opt.incsearch = true -- Incremental search
+
+-- Better folding
+vim.opt.foldmethod = 'indent'
+vim.opt.foldlevel = 99
+vim.opt.foldenable = false  -- Start with folds open
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -19,10 +28,6 @@ vim.g.have_nerd_font = true
 -- For the markdown plugin
 vim.g.mkdp_filetypes = { 'markdown' }
 vim.g.mkdp_auto_start = 1
-
--- Codeium Autocomplete
-vim.g.codeium_enabled = false
-vim.g.codeium_disable_bindings = 1
 
 -- Theme
 vim.opt.termguicolors = true
@@ -78,7 +83,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- Spaces after indentation
 vim.opt.shiftwidth = 4
@@ -96,5 +101,23 @@ vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 
 -- Enable blinking cursor
 vim.opt.guicursor = 'n-v-sm:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,c-ci-ve:ver20,r-cr-o:hor20,i:ver25-blinkon500-blinkoff500'
+
+-- Performance improvements
+vim.opt.ttyfast = true
+
+-- Better diff mode
+vim.opt.diffopt:append('vertical,algorithm:patience')
+
+-- Better backup and swap handling
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+
+-- Spell checking (useful for comments and docs)
+vim.opt.spelllang = 'en_us'
+
+-- Better command line completion
+vim.opt.history = 1000
+vim.opt.wildmenu = true
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -60,8 +60,6 @@ return {
             make_slash_commands = true,
           },
         },
-
-        --- Plugin specific options-------------------
         native_servers = {}, -- add your custom lua native servers here
         ui = {
           window = {
@@ -139,7 +137,9 @@ return {
             return require('codecompanion.adapters').extend('copilot', {
               schema = {
                 model = {
-                  default = 'claude-sonnet-4',
+                  -- default = 'claude-sonnet-4',
+                  default = 'gpt-5'
+                  -- default = 'claude-3.7-sonnet',
                 },
               },
             })

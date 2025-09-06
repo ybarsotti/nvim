@@ -15,15 +15,74 @@ return {
       status = { virtual_text = true },
       output = { open_on_run = true },
     },
-    config = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-python',
-          require 'neotest-jest',
-          require 'neotest-golang',
-          require 'neotest-vitest',
-        },
+    config = function(_, opts)
+      local function has_any(globs)
+        for _, g in ipairs(globs) do
+          if vim.fn.glob(g) ~= '' then
+            return true
+          end
+        end
+        return false
+      end
+
+      local function first_glob(globs)
+        for _, g in ipairs(globs) do
+          local m = vim.fn.glob(g)
+          if m ~= '' then
+            local first = vim.split(m, '\n')[1]
+            if first and first ~= '' then return first end
+          end
+        end
+      end
+
+      local jest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm test --')
+        or (vim.fn.executable('yarn') == 1 and 'yarn test --')
+        or 'npm test --'
+
+      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm vitest run --')
+        or (vim.fn.executable('yarn') == 1 and 'yarn vitest run --')
+        or 'npx vitest run --'
+
+      local lib = require('neotest.lib')
+      local function pkg_root(...)
+        local matcher = lib.files.match_root_pattern(...)
+        if matcher then
+          local file = vim.api.nvim_buf_get_name(0)
+          return matcher(file) or vim.fn.getcwd()
+        end
+        return vim.fn.getcwd()
+      end
+
+      local adapters = {
+        require('neotest-python'),
+        require('neotest-golang'),
       }
+
+      if has_any({ 'vitest.config.*', 'vite.config.*' }) then
+        table.insert(adapters, require('neotest-vitest')({
+          vitestCommand = vitest_cmd,
+          cwd = pkg_root('vitest.config.*', 'vite.config.*', 'package.json'),
+          filter_dir = function(name)
+            return name ~= 'node_modules' and name ~= 'dist' and name ~= 'build' and name ~= 'coverage'
+          end,
+        }))
+      end
+
+      if has_any({ 'jest.config.*', 'jest.*.config.*', 'node_modules/.bin/jest', 'node_modules/.bin/react-scripts' }) then
+        table.insert(adapters, require('neotest-jest')({
+          jestCommand = jest_cmd,
+          cwd = pkg_root('jest.config.*', 'jest.*.config.*', 'package.json'),
+          env = { CI = true },
+          jestConfigFile = first_glob({
+            'jest.config.ts', 'jest.config.js', 'jest.config.mjs', 'jest.config.cjs',
+            'jest.*.config.ts', 'jest.*.config.js', 'jest.*.config.mjs', 'jest.*.config.cjs',
+          }),
+        }))
+      end
+
+      opts.adapters = adapters
+
+      require('neotest').setup(opts)
     end,
     keys = {
       {

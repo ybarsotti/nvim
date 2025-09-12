@@ -35,13 +35,24 @@ return {
         end
       end
 
-      local jest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm test --')
-        or (vim.fn.executable('yarn') == 1 and 'yarn test --')
-        or 'npm test --'
+      -- Use mise exec wrapper for jest commands
+      local function get_jest_cmd()
+        local base_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm test')
+          or (vim.fn.executable('yarn') == 1 and 'yarn test') 
+          or 'npm test'
+        
+        if vim.fn.executable('mise') == 1 then
+          return 'mise exec -- ' .. base_cmd .. ' --'
+        else
+          return base_cmd .. ' --'
+        end
+      end
+      
+      local jest_cmd = get_jest_cmd()
 
-      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm vitest run --')
-        or (vim.fn.executable('yarn') == 1 and 'yarn vitest run --')
-        or 'npx vitest run --'
+      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'mise exec -- pnpm vitest run --')
+        or (vim.fn.executable('yarn') == 1 and 'mise exec -- yarn vitest run --')
+        or 'mise exec -- npx vitest run --'
 
       local lib = require('neotest.lib')
       local function pkg_root(...)
@@ -68,7 +79,7 @@ return {
         }))
       end
 
-      if has_any({ 'jest.config.*', 'jest.*.config.*', 'node_modules/.bin/jest', 'node_modules/.bin/react-scripts' }) then
+      if has_any({ 'jest.config.*', 'jest.*.config.*', 'node_modules/.bin/jest', 'node_modules/.bin/react-scripts', 'package.json' }) then
         table.insert(adapters, require('neotest-jest')({
           jestCommand = jest_cmd,
           cwd = pkg_root('jest.config.*', 'jest.*.config.*', 'package.json'),
@@ -77,6 +88,16 @@ return {
             'jest.config.ts', 'jest.config.js', 'jest.config.mjs', 'jest.config.cjs',
             'jest.*.config.ts', 'jest.*.config.js', 'jest.*.config.mjs', 'jest.*.config.cjs',
           }),
+          discovery = {
+            enabled = true,
+            filter_dir = function(name, rel_path, root)
+              return name ~= 'node_modules'
+            end,
+          },
+          strategy_config = {
+            -- Ensure proper JSON output for result parsing
+            args = { "--verbose", "--no-coverage", "--testLocationInResults" },
+          },
         }))
       end
 

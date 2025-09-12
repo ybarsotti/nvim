@@ -120,4 +120,20 @@ vim.opt.spelllang = 'en_us'
 vim.opt.history = 1000
 vim.opt.wildmenu = true
 
+-- mise integration - automatically load project tool versions
+if vim.fn.executable('mise') == 1 then
+  -- Add mise shims to PATH
+  local mise_shims = vim.fn.expand('~/.local/share/mise/shims')
+  if vim.fn.isdirectory(mise_shims) == 1 then
+    vim.env.PATH = mise_shims .. ':' .. vim.env.PATH
+  end
+  
+  -- Auto-execute mise hook on directory change
+  vim.api.nvim_create_autocmd('DirChanged', {
+    callback = function()
+      vim.fn.system('mise hook-env')
+    end,
+  })
+end
+
 -- vim: ts=2 sts=2 sw=2 et

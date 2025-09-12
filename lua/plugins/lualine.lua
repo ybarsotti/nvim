@@ -70,7 +70,14 @@ return {
           },
           lualine_x = {
             copilot,
-            { require 'mcphub.extensions.lualine' },
+            {
+              function()
+                return vim.g.mcphub_status or ''
+              end,
+              cond = function()
+                return vim.g.mcphub_status ~= nil and vim.g.mcphub_status ~= ''
+              end,
+            },
             {
               function()
                 return require('vectorcode.integrations').lualine()[1]()

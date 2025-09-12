@@ -208,6 +208,59 @@ return {
         },
       }
 
+      -- Rust debugging configuration
+      local function get_lldb_path()
+        -- Try common locations for lldb-vscode
+        local paths = {
+          '/usr/bin/lldb-vscode',
+          '/usr/local/bin/lldb-vscode',
+          '/opt/homebrew/bin/lldb-vscode',
+        }
+        for _, path in ipairs(paths) do
+          if vim.fn.executable(path) == 1 then
+            return path
+          end
+        end
+        -- Fallback to just 'lldb-vscode' and hope it's in PATH
+        return 'lldb-vscode'
+      end
+
+      dap.adapters.lldb = {
+        type = 'executable',
+        command = get_lldb_path(),
+        name = 'lldb'
+      }
+
+      dap.configurations.rust = {
+        {
+          name = 'Launch Rust Program',
+          type = 'lldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+          args = {},
+          env = function()
+            local variables = {}
+            for k, v in pairs(vim.fn.environ()) do
+              table.insert(variables, string.format("%s=%s", k, v))
+            end
+            return variables
+          end,
+          -- If you want to use external terminal
+          -- console = 'externalTerminal',
+        },
+        {
+          name = 'Attach to Rust Process',
+          type = 'lldb',
+          request = 'attach',
+          pid = require('dap.utils').pick_process,
+          args = {},
+        },
+      }
+
       dap.configurations.python = {
         {
           type = 'python',
@@ -235,7 +288,7 @@ return {
         {
           type = 'python',
           request = 'attach',
-          name = 'Python: Attach to Container',
+          name = 'Python: Attach to Docker Container',
           connect = {
             host = 'localhost',
             port = 5678,
@@ -247,6 +300,39 @@ return {
             },
           },
           justMyCode = true,
+        },
+        {
+          type = 'python',
+          request = 'attach',
+          name = 'Django: Attach to Docker',
+          connect = {
+            host = 'localhost',
+            port = 5678,
+          },
+          pathMappings = {
+            {
+              localRoot = '${workspaceFolder}',
+              remoteRoot = '/app',
+            },
+          },
+          django = true,
+          justMyCode = false,
+        },
+        {
+          type = 'python',
+          request = 'attach',
+          name = 'FastAPI: Attach to Docker',
+          connect = {
+            host = 'localhost',
+            port = 5678,
+          },
+          pathMappings = {
+            {
+              localRoot = '${workspaceFolder}',
+              remoteRoot = '/app',
+            },
+          },
+          justMyCode = false,
         },
       }
 

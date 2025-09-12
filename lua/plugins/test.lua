@@ -45,9 +45,9 @@ return {
         or (vim.fn.executable('yarn') == 1 and 'yarn test')
         or 'npm test'
 
-      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm vitest run --')
-        or (vim.fn.executable('yarn') == 1 and 'yarn vitest run --')
-        or 'npx vitest run --'
+      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm vitest run')
+        or (vim.fn.executable('yarn') == 1 and 'yarn vitest run')
+        or 'npx vitest run'
 
       local lib = require('neotest.lib')
       local function pkg_root(...)

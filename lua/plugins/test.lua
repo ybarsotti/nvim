@@ -14,6 +14,11 @@ return {
     opts = {
       status = { virtual_text = true },
       output = { open_on_run = true },
+      icons = {
+        running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+      },
+      -- Clear results when running new tests
+      quickfix = { enabled = false },
     },
     config = function(_, opts)
       local function has_any(globs)
@@ -35,24 +40,14 @@ return {
         end
       end
 
-      -- Use mise exec wrapper for jest commands
-      local function get_jest_cmd()
-        local base_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm test')
-          or (vim.fn.executable('yarn') == 1 and 'yarn test') 
-          or 'npm test'
-        
-        if vim.fn.executable('mise') == 1 then
-          return 'mise exec -- ' .. base_cmd .. ' --'
-        else
-          return base_cmd .. ' --'
-        end
-      end
-      
-      local jest_cmd = get_jest_cmd()
+      -- Note: Removed trailing '--' to allow Jest JSON output for proper test result parsing
+      local jest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm test')
+        or (vim.fn.executable('yarn') == 1 and 'yarn test')
+        or 'npm test'
 
-      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'mise exec -- pnpm vitest run --')
-        or (vim.fn.executable('yarn') == 1 and 'mise exec -- yarn vitest run --')
-        or 'mise exec -- npx vitest run --'
+      local vitest_cmd = (vim.fn.executable('pnpm') == 1 and 'pnpm vitest run --')
+        or (vim.fn.executable('yarn') == 1 and 'yarn vitest run --')
+        or 'npx vitest run --'
 
       local lib = require('neotest.lib')
       local function pkg_root(...)
@@ -93,10 +88,6 @@ return {
             filter_dir = function(name, rel_path, root)
               return name ~= 'node_modules'
             end,
-          },
-          strategy_config = {
-            -- Ensure proper JSON output for result parsing
-            args = { "--verbose", "--no-coverage", "--testLocationInResults" },
           },
         }))
       end
@@ -169,6 +160,13 @@ return {
         end,
         desc = 'Neotest: Toggle Watch',
       },
+      {
+        '<leader>tC',
+        function()
+          require('neotest').status.clear()
+        end,
+        desc = 'Neotest: Clear Status',
+      },
     },
   },
   { -- Debugger
@@ -214,7 +212,14 @@ return {
         {
           type = 'python',
           request = 'launch',
-          name = 'Launch file (uv .venv)',
+          name = 'Launch file (project python)',
+          program = '${file}',
+          console = 'integratedTerminal',
+        },
+        {
+          type = 'python',
+          request = 'launch',
+          name = 'Launch file (.venv)',
           pythonPath = '${workspaceFolder}/.venv/bin/python',
           program = '${file}',
           console = 'integratedTerminal',
@@ -223,6 +228,7 @@ return {
           type = 'python',
           request = 'launch',
           name = 'Launch file (system python)',
+          pythonPath = 'python3',
           program = '${file}',
           console = 'integratedTerminal',
         },

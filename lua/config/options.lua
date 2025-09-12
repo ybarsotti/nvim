@@ -120,20 +120,74 @@ vim.opt.spelllang = 'en_us'
 vim.opt.history = 1000
 vim.opt.wildmenu = true
 
--- mise integration - automatically load project tool versions
-if vim.fn.executable('mise') == 1 then
-  -- Add mise shims to PATH
-  local mise_shims = vim.fn.expand('~/.local/share/mise/shims')
-  if vim.fn.isdirectory(mise_shims) == 1 then
-    vim.env.PATH = mise_shims .. ':' .. vim.env.PATH
+-- Tool version management integration
+local function setup_tool_integrations()
+  -- mise integration for go, zig, and other languages
+  if vim.fn.executable('mise') == 1 then
+    -- Add mise shims to PATH
+    local mise_shims = vim.fn.expand('~/.local/share/mise/shims')
+    if vim.fn.isdirectory(mise_shims) == 1 then
+      vim.env.PATH = mise_shims .. ':' .. vim.env.PATH
+    end
+    
+    -- Auto-execute mise hook on directory change
+    vim.api.nvim_create_autocmd('DirChanged', {
+      callback = function()
+        vim.fn.system('mise hook-env')
+      end,
+    })
   end
-  
-  -- Auto-execute mise hook on directory change
-  vim.api.nvim_create_autocmd('DirChanged', {
-    callback = function()
-      vim.fn.system('mise hook-env')
-    end,
-  })
+
+  -- nvm integration for Node.js projects
+  local nvm_dir = os.getenv('NVM_DIR') or (os.getenv('HOME') .. '/.nvm')
+  if vim.fn.isdirectory(nvm_dir) == 1 then
+    local function activate_nvm()
+      local cwd = vim.fn.getcwd()
+      if vim.fn.filereadable(cwd .. '/.nvmrc') == 1 then
+        local handle = io.popen('bash -c "source ' .. nvm_dir .. '/nvm.sh && nvm use 2>/dev/null && which node"')
+        if handle then
+          local node_path = handle:read("*a"):gsub("\n$", "")
+          handle:close()
+          if node_path and node_path ~= "" then
+            local node_dir = vim.fn.fnamemodify(node_path, ':h')
+            vim.env.PATH = node_dir .. ':' .. vim.env.PATH
+          end
+        end
+      end
+    end
+    
+    -- Activate nvm on startup and directory change
+    activate_nvm()
+    vim.api.nvim_create_autocmd({'DirChanged', 'VimEnter'}, {
+      callback = activate_nvm,
+    })
+  end
+
+  -- uv integration for Python projects
+  if vim.fn.executable('uv') == 1 then
+    local function activate_uv()
+      local cwd = vim.fn.getcwd()
+      if vim.fn.filereadable(cwd .. '/pyproject.toml') == 1 then
+        local handle = io.popen('cd ' .. cwd .. ' && uv run python -c "import sys; print(sys.executable)" 2>/dev/null')
+        if handle then
+          local python_path = handle:read("*a"):gsub("\n$", "")
+          handle:close()
+          if python_path and python_path ~= "" then
+            local python_dir = vim.fn.fnamemodify(python_path, ':h')
+            vim.env.PATH = python_dir .. ':' .. vim.env.PATH
+          end
+        end
+      end
+    end
+    
+    -- Activate uv on startup and directory change
+    activate_uv()
+    vim.api.nvim_create_autocmd({'DirChanged', 'VimEnter'}, {
+      callback = activate_uv,
+    })
+  end
 end
+
+setup_tool_integrations()
 
 -- vim: ts=2 sts=2 sw=2 et

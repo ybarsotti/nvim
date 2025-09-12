@@ -17,7 +17,7 @@ return {
     bypass_save_filetypes = { 'alpha', 'dashboard' },
     auto_restore_last_session = false,
     auto_restore = false,
-    use_git_branch = true,
+    git_use_branch_name = true,
     show_auto_restore_notif = true,
   },
 }

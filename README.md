@@ -115,36 +115,202 @@ Language servers and formatters auto-install via Mason:
 | Docker         | dockerls   | -         | hadolint  | ✅ |
 | YAML/JSON      | yamlls/jsonls | prettier | -       | ✅ |
 
-## ⌨️ Essential Keybindings
+## ⌨️ Complete Keymap Reference
 
-### AI & Code Assistance
-| Key | Action | Description |
-|-----|--------|--------------|
-| `<leader>aa` | CodeCompanion Actions | Open AI actions menu |
-| `<leader>ac` | Toggle Chat | Open/close AI chat |
-| `<leader>ai` | Inline AI | AI inline completion |
-| `<leader>ar` | Refactor | AI-powered refactoring |
-| `<leader>ad` | Document | Generate documentation |
+### 🎯 Core Navigation & Editing
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<Esc>` | n | Clear search highlights |
+| `<C-s>` | n | Save file |
+| `<C-q>` | n | Quit file |
+| `<C-d>` / `<C-u>` | n | Scroll down/up and center screen |
+| `n` / `N` | n | Find next/previous and center |
+| `x` | n, v | Delete char without saving to register |
 
-### Navigation & Search
-| Key | Action | Description |
-|-----|--------|--------------|
-| `<leader>ff` | Find Files | Telescope file finder |
-| `<leader>fg` | Live Grep | Search in files |
-| `<leader>fb` | Find Buffers | Switch between buffers |
-| `<leader>e` | File Explorer | Toggle Neo-tree |
-| `gd` | Go to Definition | Jump to symbol definition |
-| `gr` | Find References | Find all references |
+### 🪟 Window & Buffer Management
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<Tab>` / `<S-Tab>` | n | Next/previous buffer |
+| `<leader>wx` | n | Close buffer |
+| `<leader>wX` | n | Close all buffers |
+| `<leader>wo` | n | Close all except current |
+| `<leader>wv` / `<leader>wh` | n | Split window vertically/horizontally |
+| `<leader>we` | n | Make split windows equal |
+| `<C-hjkl>` | n | Navigate between windows |
+| `<Up>/<Down>/<Left>/<Right>` | n | Resize windows |
 
-### LSP & Development
-| Key | Action | Description |
-|-----|--------|--------------|
-| `<leader>ca` | Code Actions | Show available actions |
-| `<leader>cr` | Rename Symbol | Rename under cursor |
-| `<leader>ch` | Toggle Hints | Toggle inlay hints |
-| `K` | Hover Info | Show documentation |
+### 🔍 Telescope (Search & Navigation)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>sh` | n | Search Help |
+| `<leader>sk` | n | Search Keymaps |
+| `<leader>sf` | n | Search Files |
+| `<leader>sw` | n | Search current Word |
+| `<leader>sg` | n | Search by Grep |
+| `<leader>sb` | n | Search existing Buffers |
+| `<leader>sd` | n | Search Diagnostics |
+| `<leader>sr` | n | Search Resume |
+| `<leader>s.` | n | Search Recent Files |
+| `<leader>/` | n | Fuzzily search in current buffer |
 
-> **💡 Tip**: Press `<leader>` and wait to see all available keybindings with which-key!
+### 🧠 LSP (Language Server Protocol)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `gd` | n | Go to Definition |
+| `gD` | n | Go to Declaration |
+| `gO` | n | Get document symbols |
+| `grn` | n | Rename symbol |
+| `gra` | n | Code Action |
+| `grr` | n | Find References |
+| `gri` | n | Go to Implementation |
+| `grt` | n | Go to Type Definition |
+| `<leader>cr` | n | Code Rename |
+| `<leader>ca` | n, x | Code Action |
+| `<leader>ch` | n | Toggle Code Hints |
+| `<leader>cds` | n | Code Document Symbols |
+| `<leader>cws` | n | Code Workspace Symbols |
+
+### 🤖 AI Assistance (CodeCompanion & MCPHub)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>aa` | n, v | CodeCompanion Actions |
+| `<leader>ac` | n, v | CodeCompanion Toggle Chat |
+| `<leader>ai` | n, v | CodeCompanion Inline mode |
+| `<leader>aA` | v | Add selected into chat buffer |
+| `<leader>ad` | v | Write documentation for code |
+| `<leader>ar` | v | Refactor code |
+| `<leader>aR` | v | Review code |
+| `<leader>an` | v | Better naming suggestions |
+| `<leader>ah` | n | CodeCompanion History |
+| `<leader>am` | n | MCPHub Open |
+
+### 📁 File Explorer (Neo-tree)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>e` | n | Toggle Neo-tree |
+| `<leader>ge` | n | Open git status |
+| `\` | n | Reveal current file in tree |
+
+### 🌿 Git Operations
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>gl` | n | LazyGit |
+| `<leader>gd` / `<leader>gx` | n | Git Diff Open/Close |
+| `]c` / `[c` | n | Next/previous git change |
+| `gh` / `gH` | n | Apply/Reset hunks |
+| `<leader>gs` / `<leader>gr` | n, v | Stage/reset hunk |
+| `<leader>gS` / `<leader>gR` | n | Stage/reset buffer |
+| `<leader>gu` | n | Undo stage hunk |
+| `<leader>gp` | n | Preview hunk |
+| `<leader>gb` | n | Toggle blame line |
+
+### 🧪 Testing (Neotest)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>tt` | n | Run File |
+| `<leader>tT` | n | Run All Test Files |
+| `<leader>tr` | n | Run Nearest |
+| `<leader>tl` | n | Run Last |
+| `<leader>ts` | n | Toggle Summary |
+| `<leader>to` / `<leader>tO` | n | Show/Toggle Output |
+| `<leader>tS` | n | Stop tests |
+| `<leader>tw` | n | Toggle Watch |
+| `<leader>td` | n | Debug Nearest |
+
+### 🐛 Debugging (DAP)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>db` | n | Toggle Breakpoint |
+| `<leader>dc` | n | Continue |
+| `<leader>di` / `<leader>do` / `<leader>dO` | n | Step Into/Over/Out |
+| `<leader>dr` | n | Toggle REPL |
+| `<leader>du` | n | Toggle UI |
+| `<leader>dt` | n | Terminate |
+| `<leader>dp` | n | Pause |
+
+### 📋 Diagnostics (Trouble)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>qx` | n | Diagnostics |
+| `<leader>qX` | n | Buffer Diagnostics |
+| `<leader>qs` | n | Symbols |
+| `<leader>ql` | n | LSP Definitions/References |
+| `<leader>qL` / `<leader>qQ` | n | Location/Quickfix List |
+
+### 🎯 Code Navigation & Utilities
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>cm` | n | Harpoon Mark file |
+| `<leader>1` - `<leader>4` | n | Go to Harpoon file 1-4 |
+| `<leader>ce` | n | Harpoon window |
+| `<leader>cz` | n | Toggle code outline |
+| `<leader>cf` | n, v | Format file/range |
+| `<leader>cF` | n | Trigger linting |
+
+### 🔄 Find & Replace (GrugFar)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>RG` | n | Open find replace window |
+| `<leader>Rg` | n | Limit to current file |
+| `<leader>Rw` | n | Search word under cursor |
+| `<leader>Rs` | v | Search selection |
+
+### 💻 Terminal (FloaTerm)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<F7>` | n | New terminal |
+| `<F8>` / `<F9>` | n | Previous/Next terminal |
+| `<F12>` | n | Toggle terminal |
+| `<F5>` | n, i | Run Python file (Python only) |
+
+### 📝 Session Management
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>wr` | n | Search sessions |
+| `<leader>wS` | n | Save session |
+| `<leader>wa` | n | Toggle autosave |
+| `<leader>wd` / `<leader>wD` | n | Purge/Delete sessions |
+
+### 🛠️ Utilities & Miscellaneous
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>cs` / `<leader>cS` | x | Code screenshot to clipboard/file |
+| `<leader>y` | n | Yazi file manager |
+| `<leader>p` | n | Paste image from clipboard |
+| `<leader>zz` / `<leader>zZ` | n | Zen mode |
+
+### ✏️ Visual Mode Enhancements
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<` / `>` | v | Indent left/right (stay in visual) |
+| `p` | v | Paste and keep yanked content |
+
+### 🎨 Surround Operations (Mini.surround)
+| Key | Mode | Description |
+|-----|------|-------------|
+| `sa` | n, v | Add surrounding |
+| `sd` / `sr` | n | Delete/Replace surrounding |
+| `sf` / `sF` | n | Find right/left surrounding |
+| `sh` | n | Highlight surrounding |
+
+### 🎪 Comment Operations
+| Key | Mode | Description |
+|-----|------|-------------|
+| `gc` | n, v | Toggle comment |
+| `gcc` | n | Comment line |
+
+### 📝 Key Pattern Groups:
+- **`<leader>a*`** - AI and assistance functions
+- **`<leader>c*`** - Code-related actions
+- **`<leader>d*`** - Debugging operations
+- **`<leader>g*`** - Git operations
+- **`<leader>q*`** - Diagnostics and quickfix
+- **`<leader>s*`** - Search operations
+- **`<leader>t*`** - Testing operations
+- **`<leader>w*`** - Window, buffer, and session management
+- **`<leader>R*`** - Find and replace
+
+> **💡 Pro Tip**: Press `<leader>` and wait to see all available keybindings with which-key!
 
 ## 🎛️ Customization
 

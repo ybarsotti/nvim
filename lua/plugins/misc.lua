@@ -39,9 +39,10 @@ return {
       require('nvim-ts-autotag').setup()
     end,
   },
-  { -- Helps updating tags "(), ''"
+  { -- Helps updating tags "(), ''" - DISABLED: conflicts with mini.surround
     -- Keybind: cs<current_tag><new_tag>
     'tpope/vim-surround',
+    enabled = false,
     lazy = false,
   },
   { -- Allows to repeat non native commands
